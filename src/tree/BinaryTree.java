@@ -135,28 +135,6 @@ public class BinaryTree<E> extends Tree<E> implements Serializable{
 		return leavesList;
 	}
 
-	private void getNodeSubTree(BinaryTreeNode<E> root, BinaryTreeNode<E> node,
-			BinaryTree<E> tree) {
-		if (root != null && !root.equals(node)) {
-			BinaryTreeNode<E> cursor = new BinaryTreeNode<E>(root.getInfo());
-
-			if (root.getLeft() != null && !root.getLeft().equals(node)) {
-				getNodeSubTree(root.getLeft(), node, tree);
-				cursor.setLeft((BinaryTreeNode<E>) tree.getRoot());
-			} else {
-				cursor.setLeft(null);
-			}
-			if (root.getRight() != null && root.getRight().equals(node)) {
-				getNodeSubTree(root.getRight(), node, tree);
-				cursor.setRight((BinaryTreeNode<E>) tree.getRoot());
-			} else {
-				cursor.setRight(null);
-			}
-
-			tree.setRoot(cursor);
-		}
-	}
-
 	public List<BinaryTreeNode<E>> getSons(BinaryTreeNode<E> node) {
 		List<BinaryTreeNode<E>> sons = new ArrayList<BinaryTreeNode<E>>();
 
