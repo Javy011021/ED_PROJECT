@@ -21,13 +21,12 @@ public class Huffman {
         PriorityQueue<BinaryTreeNode<HuffmanNode>>result = new PriorityQueue<>(Comparator.comparingInt(l -> l.getInfo().getFrequency()));
         for(Map.Entry<Character, Integer> aux : frequency.entrySet()){
             HuffmanLeaf aux1 = new HuffmanLeaf(aux.getValue(), aux.getKey());
-            result.add(new BinaryTreeNode<HuffmanNode>(aux1));
+            result.offer(new BinaryTreeNode<HuffmanNode>(aux1));
         }
         return result;
     }
 
-    public String createHuffmanTree(PriorityQueue<BinaryTreeNode<HuffmanNode>>stringProcessed,String message){
-        String result=null;
+    public void createHuffmanTree(PriorityQueue<BinaryTreeNode<HuffmanNode>>stringProcessed){
         while(stringProcessed.size()>1){
             BinaryTreeNode<HuffmanNode> left = stringProcessed.poll();
             BinaryTreeNode<HuffmanNode> right = stringProcessed.poll();
@@ -36,10 +35,9 @@ public class Huffman {
             BinaryTreeNode<HuffmanNode>aux1=new BinaryTreeNode<>(aux);
             aux1.setLeft(left);
             aux1.setRight(right);
-            stringProcessed.add(aux1);
+            stringProcessed.offer(aux1);
         }
         tree.setRoot(stringProcessed.peek());
-        return result;
     }
 
 }
