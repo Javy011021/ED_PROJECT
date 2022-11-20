@@ -62,7 +62,7 @@ public class Huffman {
             decode.append(((HuffmanLeaf) root.getInfo()).getCharacter());
             root = (BinaryTreeNode<HuffmanNode>) tree.getRoot();
         }
-        if(code==null||code.length()==0)
+        if(code.length()==0)
             return;
         huffmanDecoding((code.charAt(0)=='0')?root.getLeft():root.getRight(),code.deleteCharAt(0));
     }
