@@ -10,10 +10,11 @@ import java.util.PriorityQueue;
 
 
 public class Huffman {
-
     private BinaryTree<HuffmanNode>tree;
     private HashMap<Character,String>codeMap;
     private String message;
+    private StringBuilder decode;
+
     public PriorityQueue<BinaryTreeNode<HuffmanNode>> processString (){
         Map<Character, Integer> frequency = new HashMap<>();
         for (char c: message.toCharArray()){
@@ -55,5 +56,14 @@ public class Huffman {
             code.append(codeMap.get(c));
         }
         return code;
+    }
+    public void huffmanDecoding(BinaryTreeNode<HuffmanNode>root, StringBuilder code){
+        if(root==null)
+            return;
+        if(root.getInfo() instanceof HuffmanLeaf){
+            decode.append(((HuffmanLeaf) root.getInfo()).getCharacter());
+            root = (BinaryTreeNode<HuffmanNode>) tree.getRoot();
+        }
+        huffmanDecoding((code.charAt(0)=='0')?root.getLeft():root.getRight(),code.deleteCharAt(0));
     }
 }
