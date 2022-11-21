@@ -27,7 +27,7 @@ public class Main {
             BodyPart testroot = new MimeBodyPart();
             testroot.setText("Texto del mensaje");
             BodyPart adjunto = new MimeBodyPart();
-            adjunto.setDataHandler(new DataHandler(new FileDataSource("F:\\Informatica\\Segundo\\ED\\ED_PROJECT/correo.txt")));
+            adjunto.setDataHandler(new DataHandler(new FileDataSource("correo.txt")));
             adjunto.setFileName("correo.txt");
             MimeMultipart multiParte = new MimeMultipart();
             multiParte.addBodyPart(testroot);
@@ -35,7 +35,7 @@ public class Main {
 
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress("garciaj1246@gmail.com"));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress("javiergarca923@yahoo.com"));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress("richardoro2001@gmail.com"));
             message.setSubject("Hola");
             message.setContent(multiParte);
 

@@ -11,16 +11,15 @@ import java.util.PriorityQueue;
 
 public class Huffman {
     private BinaryTree<HuffmanNode>tree;
-    private HashMap<Character,String>codeMap;
     private String message;
-    private StringBuilder decode;
+
 
     public PriorityQueue<BinaryTreeNode<HuffmanNode>> processString (){
         Map<Character, Integer> frequency = new HashMap<>();
         for (char c: message.toCharArray()){
             frequency.put(c,frequency.getOrDefault(c,0)+1);
         }
-        PriorityQueue<BinaryTreeNode<HuffmanNode>>result = new PriorityQueue<>(Comparator.comparingInt(l -> l.getInfo().getFrequency()));
+        PriorityQueue<BinaryTreeNode<HuffmanNode>>result = new PriorityQueue<>(Comparator.comparingInt(node -> node.getInfo().getFrequency()));
         for(Map.Entry<Character, Integer> aux : frequency.entrySet()){
             HuffmanLeaf aux1 = new HuffmanLeaf(aux.getValue(), aux.getKey());
             result.offer(new BinaryTreeNode<>(aux1));
@@ -41,29 +40,39 @@ public class Huffman {
         }
         tree.setRoot(stringProcessed.peek());
     }
-    public void createCodeMap(BinaryTreeNode<HuffmanNode>root, String code){
-        if(root==null)
+    public void createCodeMap(BinaryTreeNode<HuffmanNode>node, String code, HashMap<Character,String> map){
+
+        if(node==null)
             return;
-        if(root.getInfo() instanceof HuffmanLeaf){
-            codeMap.put(((HuffmanLeaf) root.getInfo()).getCharacter(), code.length() > 0 ? code:"1");
+        if(node.getInfo() instanceof HuffmanLeaf){
+            map.put(((HuffmanLeaf) node.getInfo()).getCharacter(), code.length() > 0 ? code:"1");
         }
-        createCodeMap(root.getLeft(),code + "0");
-        createCodeMap(root.getRight(),code + "1");
+        createCodeMap(node.getLeft(),code + "0",map);
+        createCodeMap(node.getRight(),code + "1",map);
     }
     public StringBuilder getHuffmanCode(){
+        HashMap<Character,String>codeMap = new HashMap<>();
+        createCodeMap((BinaryTreeNode<HuffmanNode>) tree.getRoot(),"", codeMap);
         StringBuilder code = new StringBuilder();
         for(char c : message.toCharArray()){
             code.append(codeMap.get(c));
         }
         return code;
     }
-    public void huffmanDecoding(BinaryTreeNode<HuffmanNode>root, StringBuilder code){
-        if(root.getInfo() instanceof HuffmanLeaf){
-            decode.append(((HuffmanLeaf) root.getInfo()).getCharacter());
-            root = (BinaryTreeNode<HuffmanNode>) tree.getRoot();
+
+    public String huffmanDecoding(String code){
+        StringBuilder result = new StringBuilder();
+        StringBuilder codeAux = new StringBuilder(code);
+        huffmanDecodingAux((BinaryTreeNode<HuffmanNode>) tree.getRoot(),codeAux,result);
+        return result.toString();
+    }
+    public void huffmanDecodingAux(BinaryTreeNode<HuffmanNode>node, StringBuilder code, StringBuilder decode){
+        if(node.getInfo() instanceof HuffmanLeaf){
+            decode.append(((HuffmanLeaf) node.getInfo()).getCharacter());
+            node = (BinaryTreeNode<HuffmanNode>) tree.getRoot();
         }
         if(code.length()==0)
             return;
-        huffmanDecoding((code.charAt(0)=='0')?root.getLeft():root.getRight(),code.deleteCharAt(0));
+        huffmanDecodingAux((code.charAt(0)=='0')?node.getLeft():node.getRight(),code.deleteCharAt(0),decode);
     }
 }
