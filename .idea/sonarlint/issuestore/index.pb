@@ -23,3 +23,7 @@ w
 G.idea/sonarlint/issuestore/9/f/9fe84ebb15faf917b7def6236dba604453cc61e0,f\0\f0e0f9cec86fe4b939ae22be5264c758801eb28f
 w
 G.idea/sonarlint/issuestore/7/6/76b8d9736099934e88e8067651ccc42d60f5ed33,1\f\1fedd97686dc3a991191deb1b3d5669e1d4b40f8
+H
+src/tree/BinaryTree.java,d\a\da7c2b30d94686e5d40a937cad13d258e30346d1
+L
+src/tree/BinaryTreeNode.java,2\4\24dd0a08d730c15d213e024bbf26fb45f7faf45d
