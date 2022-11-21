@@ -11,10 +11,16 @@ import java.util.PriorityQueue;
 
 public class Huffman {
     private BinaryTree<HuffmanNode>tree;
-    private String message;
+
+    private String huffmanCode;
+    public Huffman(String message){
+        createHuffmanTree(processString(message));
+        huffmanCode=getHuffmanCode(message).toString();
+    }
 
 
-    public PriorityQueue<BinaryTreeNode<HuffmanNode>> processString (){
+
+    public PriorityQueue<BinaryTreeNode<HuffmanNode>> processString (String message){
         Map<Character, Integer> frequency = new HashMap<>();
         for (char c: message.toCharArray()){
             frequency.put(c,frequency.getOrDefault(c,0)+1);
@@ -28,6 +34,7 @@ public class Huffman {
     }
 
     public void createHuffmanTree(PriorityQueue<BinaryTreeNode<HuffmanNode>>stringProcessed){
+        tree = new BinaryTree<>();
         while(stringProcessed.size()>1){
             BinaryTreeNode<HuffmanNode> left = stringProcessed.poll();
             BinaryTreeNode<HuffmanNode> right = stringProcessed.poll();
@@ -50,7 +57,7 @@ public class Huffman {
         createCodeMap(node.getLeft(),code + "0",map);
         createCodeMap(node.getRight(),code + "1",map);
     }
-    public StringBuilder getHuffmanCode(){
+    public StringBuilder getHuffmanCode(String message){
         HashMap<Character,String>codeMap = new HashMap<>();
         createCodeMap((BinaryTreeNode<HuffmanNode>) tree.getRoot(),"", codeMap);
         StringBuilder code = new StringBuilder();

@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import GUI.components.PButton;
+import logic.Huffman;
 
 public class CodePanel extends JPanel {
     private JTextArea phraseText;
@@ -28,7 +29,8 @@ public class CodePanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     //call huffman
-                    String code="1001010";
+
+                    String code="10101";
                     refreshOutput(code);
                 }
             });
