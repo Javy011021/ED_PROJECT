@@ -1,6 +1,7 @@
 package GUI.views;
 
 import GUI.components.PButton;
+import logic.System;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,7 +30,7 @@ public class DecodePanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     //call huffman
-                    String code="Javi gay";
+                    String code= System.getInstance().getHuffmanCoding(phraseText.getText());
                     refreshOutput(code);
                 }
             });
