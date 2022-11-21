@@ -1,0 +1,13 @@
+
+t
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(üïÉÿÿÿÿÿ
+t
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(…ŠÍõşÿÿÿÿ
+t
+java:S2293R"YReplace the type specification in this constructor call with the diamond operator ("<>").(³ô°™ùÿÿÿÿ
+m
+java:S3776"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(¯èÎëÿÿÿÿÿ
+p
+java:S2272<"NAdd a "NoSuchElementException" for iteration beyond the end of the collection.(¤¿ğßıÿÿÿÿ8øÔÉ0
+\
+java:S1161G":Add the "@Override" annotation above this method signature(¦³üëûÿÿÿÿ8øÔÉ0

@@ -1,4 +1,4 @@
-package GUI.personal_components;
+package GUI.components;
 
 import javax.swing.*;
 import java.awt.*;

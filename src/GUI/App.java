@@ -1,7 +1,9 @@
 package GUI;
 
-import GUI.personal_components.BarOption;
-import GUI.personal_components.BarOptions;
+import GUI.components.*;
+import GUI.views.CodePanel;
+import GUI.views.DecodePanel;
+import GUI.views.HelpPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +26,7 @@ public class App extends JFrame{
     }
     public App(){
         setTitle("Huffman");
-        setBounds(0, 0, 1080, 640);
+        setBounds(0, 0, Definitions.APP_WIDTH, Definitions.APP_HEIGHT);
         getContentPane().setLayout(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -35,7 +37,7 @@ public class App extends JFrame{
         setContentPane(panel);
         panel.add(getSidePanel());
         panel.add(getBodyPanel());
-
+        sidePanel.add(getOptions());
 
     }
 
@@ -46,7 +48,7 @@ public class App extends JFrame{
             sidePanel.setBounds(0,0,240, this.getHeight());
             sidePanel.setBackground(Color.WHITE);
             sidePanel.add(getCopyrightLabel());
-            sidePanel.add(getOptions());
+
         }
         return sidePanel;
     }
@@ -73,12 +75,12 @@ public class App extends JFrame{
 
     public BarOptions getOptions(){
         if (options==null){
-            options = new BarOptions(60);
+            options = new BarOptions(bodyPanel,60);
             options.setBackground(Color.WHITE);
             options.setBounds(10,10,sidePanel.getWidth()-10,500);
-            options.addOption(new BarOption("Code"));
-            options.addOption(new BarOption("Decode"));
-            options.addOption(new BarOption("Help"));
+            options.addOption(new BarOption("Code"), new CodePanel(),true);
+            options.addOption(new BarOption("Decode"), new DecodePanel());
+            options.addOption(new BarOption("Help"), new HelpPanel());
 
         }
         return options;
