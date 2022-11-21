@@ -2,19 +2,32 @@ package GUI.personal_components;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-public class BarOption {
-    private JLabel option;
+public class BarOption extends JLabel{
     public BarOption(String text){
-        option = new JLabel(text);
-        option.setFont(new Font("Tahoma", Font.BOLD, 13));
+        super(text);
+        setFont(new Font("Tahoma", Font.BOLD, 13));
+        setForeground(Color.GRAY);
+        setOpaque(true);
+        setBackground(Color.WHITE);
+        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+
+                setBackground(Color.LIGHT_GRAY);
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+
+                setBackground(Color.WHITE);
+            }
+        });
     }
 
-    public void setBounds(int x, int y, int width, int height){
-        option.setBounds(x,y,width,height);
-    }
 
-    public Rectangle getBounds(){
-        return option.getBounds();
-    }
 }

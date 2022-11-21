@@ -73,12 +73,13 @@ public class App extends JFrame{
 
     public BarOptions getOptions(){
         if (options==null){
-            options = new BarOptions(100);
-            options.setBounds(10,10,sidePanel.getWidth()-10);
-            options.addOption(new BarOption("asd"));
-            options.addOption(new BarOption("rqwer"));
-            options.addOption(new BarOption("qwrqwd"));
-            options.addOption(new BarOption("asasedaqdd"));
+            options = new BarOptions(60);
+            options.setBackground(Color.WHITE);
+            options.setBounds(10,10,sidePanel.getWidth()-10,500);
+            options.addOption(new BarOption("Code"));
+            options.addOption(new BarOption("Decode"));
+            options.addOption(new BarOption("Help"));
+
         }
         return options;
     }
