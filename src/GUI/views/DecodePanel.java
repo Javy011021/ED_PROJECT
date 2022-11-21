@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class DecodePanel extends JPanel {
     private JTextArea phraseText;
@@ -40,6 +42,15 @@ public class DecodePanel extends JPanel {
             phraseText=new JTextArea();
             phraseText.setBounds(10,20,500,200);
             phraseText.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+            phraseText.addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyTyped(KeyEvent e) {
+                    super.keyTyped(e);
+                    if (e.getKeyChar()!='0' && e.getKeyChar()!='1'){
+                        e.consume();
+                    }
+                }
+            });
         }
         return phraseText;
     }
