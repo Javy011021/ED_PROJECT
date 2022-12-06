@@ -1,6 +1,7 @@
 package GUI.views;
 
 import GUI.components.PButton;
+import GUI.components.TextAreaScroll;
 import logic.System;
 
 import javax.swing.*;
@@ -11,26 +12,47 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class DecodePanel extends JPanel {
-    private JTextArea phraseText;
+    private JLabel fileLabel;
+    private JLabel fileNameLabel;
+    private TextAreaScroll codeText;
     private PButton codeButton;
     private JLabel outputLabel;
-    private JTextArea outputCodeText;
+    private TextAreaScroll outputText;
     public DecodePanel() {
-        add(getPhraseText());
+        add(getFileLabel());
+        add(getFileNameLabel());
+        add(getCodeText());
         add(getCodeButton());
         add(getOutputLabel());
-        add(getOutputCodeLabel());
+        add(getOutputText());
+    }
+
+    public JLabel getFileLabel(){
+        if (fileLabel==null) {
+            fileLabel = new JLabel("File: ");
+            fileLabel.setBounds(10, 20, 30, 20);
+
+        }
+        return fileLabel;
+    }
+    public JLabel getFileNameLabel(){
+        if (fileNameLabel==null) {
+            fileNameLabel = new JLabel("Current");
+            fileNameLabel.setBounds(getFileLabel().getX()+getFileLabel().getWidth(), getFileLabel().getY(), 50, 20);
+
+        }
+        return fileNameLabel;
     }
 
     public PButton getCodeButton(){
         if (codeButton==null){
             codeButton = new PButton("Decode");
-            codeButton.setBounds(10,phraseText.getY()+phraseText.getHeight()+2,70,30);
+            codeButton.setBounds(10,codeText.getY()+codeText.getHeight()+4,70,30);
             codeButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     //call huffman
-                    String code= System.getInstance().getHuffmanCoding(phraseText.getText());
+                    String code= System.getInstance().getHuffmanCoding(codeText.getText());
                     refreshOutput(code);
                 }
             });
@@ -38,12 +60,12 @@ public class DecodePanel extends JPanel {
         return codeButton;
     }
 
-    public JTextArea getPhraseText(){
-        if (phraseText==null){
-            phraseText=new JTextArea();
-            phraseText.setBounds(10,20,500,200);
-            phraseText.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-            phraseText.addKeyListener(new KeyAdapter() {
+
+
+    public TextAreaScroll getCodeText(){
+        if (codeText==null){
+            codeText=new TextAreaScroll(10,40,800,200);
+            codeText.getTextArea().addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyTyped(KeyEvent e) {
                     super.keyTyped(e);
@@ -53,7 +75,7 @@ public class DecodePanel extends JPanel {
                 }
             });
         }
-        return phraseText;
+        return codeText;
     }
 
     public JLabel getOutputLabel(){
@@ -64,16 +86,15 @@ public class DecodePanel extends JPanel {
         }
         return outputLabel;
     }
-    public JTextArea getOutputCodeLabel(){
-        if (outputCodeText==null) {
-            outputCodeText = new JTextArea("");
-            outputCodeText.setBounds(10, 320, 500, 200);
-
+    public TextAreaScroll getOutputText(){
+        if (outputText==null) {
+            outputText = new TextAreaScroll();
+            outputText.setBounds(10, 320, 800, 200);
         }
-        return outputCodeText;
+        return outputText;
     }
 
     private void refreshOutput(String code){
-        outputCodeText.setText(code);
+        outputText.setText(code);
     }
 }

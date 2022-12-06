@@ -9,11 +9,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class App extends JFrame{
-    private JPanel panel;
-    private JPanel sidePanel;
+    private SidePanel sidePanel;
     private JPanel bodyPanel;
-    private JLabel copyrightLabel;
     private BarOptions options;
+
 
     public static void main(String[] args){
         EventQueue.invokeLater(new Runnable() {
@@ -24,6 +23,8 @@ public class App extends JFrame{
             }
         });
     }
+
+
     public App(){
         setTitle("Huffman");
         setBounds(0, 0, Definitions.APP_WIDTH, Definitions.APP_HEIGHT);
@@ -32,7 +33,7 @@ public class App extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(getOwner());
 
-        panel=new JPanel();
+        JPanel panel = new JPanel();
         panel.setLayout(null);
         setContentPane(panel);
         panel.add(getSidePanel());
@@ -41,14 +42,9 @@ public class App extends JFrame{
 
     }
 
-    public JPanel getSidePanel(){
+    public SidePanel getSidePanel(){
         if (sidePanel==null){
-            sidePanel = new JPanel();
-            sidePanel.setLayout(null);
-            sidePanel.setBounds(0,0,240, this.getHeight());
-            sidePanel.setBackground(Color.WHITE);
-            sidePanel.add(getCopyrightLabel());
-
+            sidePanel = new SidePanel(0,0,240, this.getHeight());
         }
         return sidePanel;
     }
@@ -63,21 +59,11 @@ public class App extends JFrame{
         return bodyPanel;
     }
 
-    public JLabel getCopyrightLabel(){
-        if (copyrightLabel==null){
-            copyrightLabel = new JLabel("©Richard, Javier");
-            copyrightLabel.setFont(new Font("Tahoma", Font.BOLD, 10));
-            copyrightLabel.setBounds(0, 0, 90,100);
-            copyrightLabel.setBounds(sidePanel.getWidth()/2-copyrightLabel.getWidth()/2, sidePanel.getHeight()-100, copyrightLabel.getWidth(),copyrightLabel.getHeight());
-        }
-        return copyrightLabel;
-    }
-
     public BarOptions getOptions(){
         if (options==null){
-            options = new BarOptions(bodyPanel,60);
+            options = new BarOptions(getBodyPanel(),60);
             options.setBackground(Color.WHITE);
-            options.setBounds(10,10,sidePanel.getWidth()-10,500);
+            options.setBounds(10,160,sidePanel.getWidth()-10,500);
             options.addOption(new BarOption("Code"), new CodePanel(),true);
             options.addOption(new BarOption("Decode"), new DecodePanel());
             options.addOption(new BarOption("Help"), new HelpPanel());
@@ -85,6 +71,10 @@ public class App extends JFrame{
         }
         return options;
     }
+
+
+
+
 
 
 }
