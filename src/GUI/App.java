@@ -44,7 +44,7 @@ public class App extends JFrame{
 
     public SidePanel getSidePanel(){
         if (sidePanel==null){
-            sidePanel = new SidePanel(0,0,240, this.getHeight());
+            sidePanel = new SidePanel(0,6,240, this.getHeight());
         }
         return sidePanel;
     }
@@ -53,7 +53,7 @@ public class App extends JFrame{
         if (bodyPanel==null){
             bodyPanel = new JPanel();
             bodyPanel.setLayout(null);
-            bodyPanel.setBounds(sidePanel.getWidth()+6,0, this.getWidth()-bodyPanel.getX(), this.getHeight());
+            bodyPanel.setBounds(sidePanel.getWidth()+6,6, this.getWidth()-bodyPanel.getX(), this.getHeight());
             bodyPanel.setBackground(Color.WHITE);
         }
         return bodyPanel;
