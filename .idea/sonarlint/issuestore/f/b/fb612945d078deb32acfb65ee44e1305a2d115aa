@@ -1,9 +1,0 @@
-
-|
-java:S13192"`The type of "map" should be an interface such as "Map" rather than the implementation "HashMap".(Ùù¶d8šğµ¼Ë0
-r
-java:S62016"PReplace this instanceof check and cast with 'instanceof HuffmanLeaf huffmanleaf'(òÉú¼üÿÿÿÿ8ˆñµ¼Ë0
-r
-java:S6201M"PReplace this instanceof check and cast with 'instanceof HuffmanLeaf huffmanleaf'(òÉú¼üÿÿÿÿ8§ñµ¼Ë0
-L
-java:S1068"/Remove this unused "huffmanCode" private field.(œÎ†8§ñµ¼Ë0

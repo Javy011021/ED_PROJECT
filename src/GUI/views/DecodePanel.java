@@ -2,20 +2,23 @@ package GUI.views;
 
 import GUI.components.PButton;
 import GUI.components.TextAreaScroll;
-import logic.System;
+import logic.CodeSystem;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
 public class DecodePanel extends JPanel {
     private JLabel fileLabel;
     private JLabel fileNameLabel;
     private TextAreaScroll codeText;
     private PButton codeButton;
+    private PButton selectButton;
     private JLabel outputLabel;
     private TextAreaScroll outputText;
     public DecodePanel() {
@@ -25,6 +28,7 @@ public class DecodePanel extends JPanel {
         add(getCodeButton());
         add(getOutputLabel());
         add(getOutputText());
+        add(getSelectButton());
     }
 
     public JLabel getFileLabel(){
@@ -38,7 +42,7 @@ public class DecodePanel extends JPanel {
     public JLabel getFileNameLabel(){
         if (fileNameLabel==null) {
             fileNameLabel = new JLabel("Current");
-            fileNameLabel.setBounds(getFileLabel().getX()+getFileLabel().getWidth(), getFileLabel().getY(), 50, 20);
+            fileNameLabel.setBounds(getFileLabel().getX()+getFileLabel().getWidth(), getFileLabel().getY(), 350, 20);
 
         }
         return fileNameLabel;
@@ -52,7 +56,7 @@ public class DecodePanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     //call huffman
-                    String code= System.getInstance().getHuffmanCoding(codeText.getText());
+                    String code= CodeSystem.getInstance().getHuffmanCoding(codeText.getText());
                     refreshOutput(code);
                 }
             });
@@ -60,7 +64,25 @@ public class DecodePanel extends JPanel {
         return codeButton;
     }
 
+    public PButton getSelectButton(){
+        if (selectButton==null){
+            selectButton = new PButton("Select");
+            selectButton.setBounds(90,codeText.getY()+codeText.getHeight()+4,70,30);
+            selectButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    FileDialog dialog = new FileDialog((Frame)null, "Select File to Open");
+                    dialog.setMode(FileDialog.LOAD);
+                    dialog.setVisible(true);
+                    String file = dialog.getDirectory()+dialog.getFile();
+                    dialog.dispose();
+                    getFileNameLabel().setText(dialog.getFile());
 
+                }
+            });
+        }
+        return selectButton;
+    }
 
     public TextAreaScroll getCodeText(){
         if (codeText==null){

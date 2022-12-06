@@ -1,12 +1,12 @@
 package logic;
 
-public class System {
-    private static System system;
+public class CodeSystem {
+    private static CodeSystem system;
     private Huffman huffman;
 
-    public static System getInstance(){
+    public static CodeSystem getInstance(){
         if(system==null){
-            system = new System();
+            system = new CodeSystem();
         }
         return system;
     }

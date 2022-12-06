@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import GUI.components.PButton;
 import GUI.components.TextAreaScroll;
-import logic.System;
+import logic.CodeSystem;
 
 public class CodePanel extends JPanel {
     private JLabel phraseLabel;
@@ -59,7 +59,7 @@ public class CodePanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     //call huffman
-                    String code = System.getInstance().createHuffman(phraseText.getText());
+                    String code = CodeSystem.getInstance().createHuffman(phraseText.getText());
                     refreshOutput(code);
                 }
             });
