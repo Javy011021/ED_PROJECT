@@ -3,6 +3,7 @@ package GUI.views;
 import GUI.components.PButton;
 import GUI.components.TextAreaScroll;
 import logic.CodeSystem;
+import logic.Convert;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -12,6 +13,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 
 public class DecodePanel extends JPanel {
     private JLabel fileLabel;
@@ -21,6 +25,7 @@ public class DecodePanel extends JPanel {
     private PButton selectButton;
     private JLabel outputLabel;
     private TextAreaScroll outputText;
+    private File file;
     public DecodePanel() {
         add(getFileLabel());
         add(getFileNameLabel());
@@ -56,8 +61,26 @@ public class DecodePanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     //call huffman
-                    String code= CodeSystem.getInstance().getHuffmanCoding(codeText.getText());
-                    refreshOutput(code);
+                    if (file == null) {
+                        String code = CodeSystem.getInstance().getHuffmanCoding(codeText.getText());
+                        refreshOutput(code);
+                    }else{
+                        try {
+                            RandomAccessFile raf = new RandomAccessFile(file, "rw");
+                            byte[] codeByte = new byte[100];
+                            raf.read(codeByte);
+                            String code = (String)Convert.toObject(codeByte);
+                            getCodeText().setText(code);
+                            raf.close();
+                        } catch (FileNotFoundException ex) {
+                            throw new RuntimeException(ex);
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        } catch (ClassNotFoundException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+
                 }
             });
         }
@@ -74,8 +97,9 @@ public class DecodePanel extends JPanel {
                     FileDialog dialog = new FileDialog((Frame)null, "Select File to Open");
                     dialog.setMode(FileDialog.LOAD);
                     dialog.setVisible(true);
-                    String file = dialog.getDirectory()+dialog.getFile();
+                    String fileName = dialog.getDirectory()+dialog.getFile();
                     dialog.dispose();
+                    file = new File(fileName);
                     getFileNameLabel().setText(dialog.getFile());
 
                 }

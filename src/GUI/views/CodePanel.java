@@ -7,9 +7,12 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
+
 import GUI.components.PButton;
 import GUI.components.TextAreaScroll;
 import logic.CodeSystem;
+import logic.Convert;
 
 public class CodePanel extends JPanel {
     private JLabel phraseLabel;
@@ -104,7 +107,21 @@ public class CodePanel extends JPanel {
             saveButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                   //save in file
+                    FileDialog dialog = new FileDialog((Frame)null, "Select File to Open");
+                    dialog.setMode(FileDialog.SAVE);
+                    dialog.setVisible(true);
+                    String file = dialog.getDirectory()+dialog.getFile();
+                    dialog.dispose();
+                    try {
+                        byte data[] = Convert.toBytes(getOutputCodeLabel().getText());
+                        RandomAccessFile out = new RandomAccessFile(file,"rw");
+                        out.writeLong(data.length);
+                        out.write(data);
+
+                        out.close();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             });
         }
