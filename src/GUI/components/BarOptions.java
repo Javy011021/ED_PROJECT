@@ -56,9 +56,9 @@ public class BarOptions extends JPanel{
         if (optionListSize>0) {
             BarOption last = optionList.get(optionListSize - 1);
             Rectangle r = last.getBounds();
-            option.setBounds(r.x, r.y + r.height + margin, getWidth(), optionHeight);
+            option.setBounds(r.x, r.y + r.height + margin, getWidth()-10, optionHeight);
         }else{
-            option.setBounds(0, 0, getWidth(), optionHeight);
+            option.setBounds(0, 0, getWidth()-10, optionHeight);
         }
         optionList.add(option);
         refreshSize();

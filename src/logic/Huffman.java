@@ -80,6 +80,9 @@ public class Huffman {
         }
         if(code.length()==0)
             return;
-        huffmanDecodingAux((code.charAt(0)=='0')?node.getLeft():node.getRight(),code.deleteCharAt(0),decode);
+        if(!(node.getInfo()instanceof HuffmanLeaf))
+            huffmanDecodingAux((code.charAt(0)=='0')?node.getLeft():node.getRight(),code.deleteCharAt(0),decode);
+        else
+            huffmanDecodingAux(node,code.deleteCharAt(0),decode);
     }
 }
