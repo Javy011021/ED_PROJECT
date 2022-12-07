@@ -2,17 +2,25 @@ package GUI.views;
 
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.util.Deque;
+import java.util.Iterator;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 import GUI.components.PButton;
 import GUI.components.TextAreaScroll;
-import logic.CodeSystem;
 import logic.Convert;
+import logic.Huffman;
+import logic.HuffmanLeaf;
+import logic.HuffmanNode;
+import tree.BinaryTreeNode;
 
 public class CodePanel extends JPanel {
     private JLabel phraseLabel;
@@ -62,7 +70,7 @@ public class CodePanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     //call huffman
-                    String code = CodeSystem.getInstance().createHuffman(phraseText.getText());
+                    String code = Huffman.createHuffman(phraseText.getText());
                     refreshOutput(code);
                 }
             });
@@ -107,17 +115,24 @@ public class CodePanel extends JPanel {
             saveButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    FileDialog dialog = new FileDialog((Frame)null, "Select File to Open");
+                    FileDialog dialog = new FileDialog((Frame)null, "Save file");
                     dialog.setMode(FileDialog.SAVE);
+                    dialog.setLocationRelativeTo(dialog.getOwner());
                     dialog.setVisible(true);
                     String file = dialog.getDirectory()+dialog.getFile();
                     dialog.dispose();
                     try {
                         byte data[] = Convert.toBytes(getOutputCodeLabel().getText());
                         RandomAccessFile out = new RandomAccessFile(file,"rw");
-                        out.writeLong(data.length);
+                        out.writeInt(data.length);
                         out.write(data);
-
+                        PriorityQueue<BinaryTreeNode<HuffmanNode>> queue = Huffman.processString(getPhraseText().getText());
+                        Iterator<BinaryTreeNode<HuffmanNode>> it=queue.iterator();
+                        while (it.hasNext() ){
+                            byte[] huffmanObj = Convert.toBytes(it.next().getInfo());
+                            out.writeInt(huffmanObj.length);
+                            out.write(huffmanObj);
+                        }
                         out.close();
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);

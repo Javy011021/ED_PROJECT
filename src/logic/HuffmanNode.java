@@ -1,6 +1,8 @@
 package logic;
 
-public class HuffmanNode {
+import java.io.Serializable;
+
+public class HuffmanNode implements Serializable {
     protected int frequency;
 
     public HuffmanNode(int frequency) {

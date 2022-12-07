@@ -1,6 +1,4 @@
 
-J
-src/logic/HuffmanNode.java,7\6\76b8d9736099934e88e8067651ccc42d60f5ed33
 w
 G.idea/sonarlint/issuestore/9/7/97ed74509598d08c253786eb8914c1e841585e09,c\6\c659db84760447007bb19d25499ba455aee1e0c0
 w
@@ -19,7 +17,5 @@ w
 G.idea/sonarlint/issuestore/e/4/e49559ab2e27119238d3845cfee00ee6cd800c55,f\0\f0ae5bc4a23c06884b242b595cc1843dd35413f6
 w
 G.idea/sonarlint/issuestore/a/c/ac43246ad7ec76e01792e7d08409d3ea55237a66,d\8\d8139f80f5b3197744e57baeb41130221fdfa25c
-J
-src/logic/HuffmanLeaf.java,b\c\bcee02042c99b806baef0c8e45d865c6f947bc31
 >
 ED_Project.iml,b\a\bab6e832b78084e0acaca374eb1e81dcb3ba06d3
