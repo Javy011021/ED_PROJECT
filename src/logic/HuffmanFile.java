@@ -24,15 +24,12 @@ public class HuffmanFile {
             long size = raf.length();
             PriorityQueue<BinaryTreeNode<HuffmanNode>> queue = new PriorityQueue<>(Comparator.comparingInt(node -> node.getInfo().getFrequency()));
             while (raf.getFilePointer()<size){
-                int tam = raf.readInt();
-                byte[] huffmanByte = new byte[tam];
-                raf.read(huffmanByte);
-                HuffmanLeaf huffNode = (HuffmanLeaf) Convert.toObject(huffmanByte);
-                queue.offer(new BinaryTreeNode<>(huffNode));
+                char character = raf.readChar();
+                int frequency = raf.readInt();
+                queue.offer(new BinaryTreeNode<>(new HuffmanLeaf(frequency, character)));
             }
-            Huffman.createHuffman(queue);
-
             raf.close();
+            Huffman.createHuffman(queue);
             return Huffman.huffmanDecoding(code);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
@@ -48,9 +45,9 @@ public class HuffmanFile {
             PriorityQueue<BinaryTreeNode<HuffmanNode>> queue = Huffman.processString(phrase);
             Iterator<BinaryTreeNode<HuffmanNode>> it=queue.iterator();
             while (it.hasNext() ){
-                byte[] huffmanObj = Convert.toBytes(it.next().getInfo());
-                out.writeInt(huffmanObj.length);
-                out.write(huffmanObj);
+                HuffmanLeaf node = (HuffmanLeaf)it.next().getInfo();
+                out.writeChar(node.getCharacter());
+                out.writeInt(node.getFrequency());
             }
             out.close();
         } catch (IOException ex) {
