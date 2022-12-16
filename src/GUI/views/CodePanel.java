@@ -16,10 +16,7 @@ import java.util.Queue;
 
 import GUI.components.PButton;
 import GUI.components.TextAreaScroll;
-import logic.Convert;
-import logic.Huffman;
-import logic.HuffmanLeaf;
-import logic.HuffmanNode;
+import logic.*;
 import tree.BinaryTreeNode;
 
 public class CodePanel extends JPanel {
@@ -121,22 +118,7 @@ public class CodePanel extends JPanel {
                     dialog.setVisible(true);
                     String file = dialog.getDirectory()+dialog.getFile();
                     dialog.dispose();
-                    try {
-                        byte data[] = Convert.toBytes(getOutputCodeLabel().getText());
-                        RandomAccessFile out = new RandomAccessFile(file,"rw");
-                        out.writeInt(data.length);
-                        out.write(data);
-                        PriorityQueue<BinaryTreeNode<HuffmanNode>> queue = Huffman.processString(getPhraseText().getText());
-                        Iterator<BinaryTreeNode<HuffmanNode>> it=queue.iterator();
-                        while (it.hasNext() ){
-                            byte[] huffmanObj = Convert.toBytes(it.next().getInfo());
-                            out.writeInt(huffmanObj.length);
-                            out.write(huffmanObj);
-                        }
-                        out.close();
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    HuffmanFile.save(file,getPhraseText().getText(),getOutputCodeLabel().getText());
                 }
             });
         }

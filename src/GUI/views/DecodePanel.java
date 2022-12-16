@@ -2,10 +2,7 @@ package GUI.views;
 
 import GUI.components.PButton;
 import GUI.components.TextAreaScroll;
-import logic.Convert;
-import logic.Huffman;
-import logic.HuffmanLeaf;
-import logic.HuffmanNode;
+import logic.*;
 import tree.BinaryTreeNode;
 
 import javax.swing.*;
@@ -59,34 +56,7 @@ public class DecodePanel extends JPanel {
             codeButton.addActionListener(e -> {
                 //call huffman
                 if (file != null) {
-                    try {
-                        RandomAccessFile raf = new RandomAccessFile(file, "rw");
-
-                        //get binary code
-                        byte[] codeByte = new byte[raf.readInt()];
-                        raf.read(codeByte);
-                        String code = (String)Convert.toObject(codeByte);
-
-                        //get queue
-                        long size = raf.length();
-                        PriorityQueue<BinaryTreeNode<HuffmanNode>> queue = new PriorityQueue<>(Comparator.comparingInt(node -> node.getInfo().getFrequency()));
-                        while (raf.getFilePointer()<size){
-                            int tam = raf.readInt();
-                            byte[] huffmanByte = new byte[tam];
-                            raf.read(huffmanByte);
-                            HuffmanLeaf huffNode = (HuffmanLeaf) Convert.toObject(huffmanByte);
-                            queue.offer(new BinaryTreeNode<>(huffNode));
-                        }
-                        Huffman.createHuffman(queue);
-                        refreshOutput(Huffman.huffmanDecoding(code));
-                        raf.close();
-                    } catch (FileNotFoundException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (ClassNotFoundException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    refreshOutput(HuffmanFile.load(file));
                 }
 
             });
