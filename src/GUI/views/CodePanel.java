@@ -30,8 +30,11 @@ public class CodePanel extends JPanel {
     private PButton treeButton;
     private JLabel outputLabel;
     private TextAreaScroll outputCodeText;
-    public CodePanel() {
+    private JPanel tarjetPanelTree;
+    private JPanel treePanel;
+    public CodePanel(JPanel panel) {
         super();
+        tarjetPanelTree = panel;
         add(getPhraseLabel());
         add(getPhraseText());
         add(getCodeButton());
@@ -147,6 +150,13 @@ public class CodePanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     //show tree
+                    treePanel = new TreeAnimate();
+                    tarjetPanelTree.add(treePanel);
+                    treePanel.setLayout(null);
+                    treePanel.setBounds(0,0,tarjetPanelTree.getWidth(),tarjetPanelTree.getHeight());
+                    treePanel.setBackground(tarjetPanelTree.getBackground());
+                    outer().setVisible(false);
+
                 }
             });
         }
@@ -172,7 +182,9 @@ public class CodePanel extends JPanel {
     }
 
 
-
+    private CodePanel outer() {
+        return CodePanel.this;
+    }
 
     private void refreshOutput(String code){
         outputCodeText.setText(code);

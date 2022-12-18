@@ -6,8 +6,6 @@ G.idea/sonarlint/issuestore/c/9/c9e39eaca1dd449ef8979be89f1929cfb4660662,d\e\de
 w
 G.idea/sonarlint/issuestore/4/a/4adbee48e94ce3d954851e1fc9938279b95c37bd,c\a\ca7fe37c74566a83dbdca3251cbec30a5b3b1276
 w
-G.idea/sonarlint/issuestore/4/a/4a47b2961d335946761ee70f588844b9147e69e2,6\e\6edf5d10e95485c88a4d22a1417f16101f4e3a1c
-w
 G.idea/sonarlint/issuestore/a/5/a5cc2925ca8258af241be7e5b0381edf30266302,e\d\ed67eb178d523a4b3f117dcbe0eda5196367ceec
 w
 G.idea/sonarlint/issuestore/5/0/50e216b4439d2538168c3ddca9c0c2fe23bd1c02,4\7\47deea973d12bd9a7ff5999d20135c170ce61489
@@ -15,5 +13,21 @@ w
 G.idea/sonarlint/issuestore/e/4/e49559ab2e27119238d3845cfee00ee6cd800c55,f\0\f0ae5bc4a23c06884b242b595cc1843dd35413f6
 w
 G.idea/sonarlint/issuestore/a/c/ac43246ad7ec76e01792e7d08409d3ea55237a66,d\8\d8139f80f5b3197744e57baeb41130221fdfa25c
->
-ED_Project.iml,b\a\bab6e832b78084e0acaca374eb1e81dcb3ba06d3
+J
+src/logic/HuffmanNode.java,7\6\76b8d9736099934e88e8067651ccc42d60f5ed33
+O
+src/GUI/components/PButton.java,6\7\67714d2f376a75aec4190d720e82c39ed85dcac5
+w
+G.idea/sonarlint/issuestore/b/c/bcee02042c99b806baef0c8e45d865c6f947bc31,4\a\4a47b2961d335946761ee70f588844b9147e69e2
+R
+".idea/artifacts/ED_Project_jar.xml,9\c\9ca686d2adea23c18b1ecb8fe93eb2865692c00f
+H
+src/META-INF/MANIFEST.MF,e\4\e4b1fd2293ba1e598e6bec4e0ee3b6b6851eb5a2
+D
+src/logic/Email.java,d\0\d0f74d3f75b9e470469743a522f8db08632486b3
+Q
+!src/GUI/components/SidePanel.java,a\b\abe018d6e33d233bda05182fff6b4eaca25dea7e
+F
+src/logic/Convert.java,1\0\105175d637081575e4be6ea53876e3f016f4b85a
+J
+src/logic/HuffmanFile.java,4\c\4cc756ce63aa9537343281a1cb0be10a2799b216

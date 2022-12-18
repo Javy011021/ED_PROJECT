@@ -1,0 +1,9 @@
+
+g	java:S112#"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8ßÊÀËÑ0
+g	java:S1126"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8©îÄËÑ0
+P
+java:S1118":Add a private constructor to hide the implicit public one.(”› Ï
+L
+java:S1197)"*Move the array designators [] to the type.(ùçÁûıÿÿÿÿ8ôÊÀËÑ0
+\
+java:S1128":Remove this unused import 'java.io.FileNotFoundException'.(·î™ùÿÿÿÿ8ëÆËÑ0

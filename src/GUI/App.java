@@ -7,6 +7,9 @@ import GUI.views.HelpPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Time;
 
 public class App extends JFrame{
     private SidePanel sidePanel;
@@ -20,6 +23,8 @@ public class App extends JFrame{
             public void run() {
                 App frame = new App();
                 frame.setVisible(true);
+
+
             }
         });
     }
@@ -64,7 +69,7 @@ public class App extends JFrame{
             options = new BarOptions(getBodyPanel(),60);
             options.setBackground(Color.WHITE);
             options.setBounds(10,160,sidePanel.getWidth()-10,500);
-            options.addOption(new BarOption("Code"), new CodePanel(),true);
+            options.addOption(new BarOption("Code"), new CodePanel(getBodyPanel()),true);
             options.addOption(new BarOption("Decode"), new DecodePanel());
             options.addOption(new BarOption("Help"), new HelpPanel());
 
