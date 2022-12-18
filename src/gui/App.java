@@ -1,15 +1,12 @@
-package GUI;
+package gui;
 
-import GUI.components.*;
-import GUI.views.CodePanel;
-import GUI.views.DecodePanel;
-import GUI.views.HelpPanel;
+import gui.components.*;
+import gui.views.CodePanel;
+import gui.views.DecodePanel;
+import gui.views.HelpPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.Time;
 
 public class App extends JFrame{
     private SidePanel sidePanel;

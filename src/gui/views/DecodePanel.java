@@ -1,19 +1,12 @@
-package GUI.views;
+package gui.views;
 
-import GUI.components.PButton;
-import GUI.components.TextAreaScroll;
+import gui.components.PButton;
+import gui.components.TextAreaScroll;
 import logic.*;
-import tree.BinaryTreeNode;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.io.*;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.PriorityQueue;
 
 public class DecodePanel extends JPanel {
     private JLabel fileLabel;

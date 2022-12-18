@@ -1,4 +1,4 @@
-package GUI.views.tree_components;
+package gui.views.draw;
 
 import java.awt.*;
 import java.util.Map;

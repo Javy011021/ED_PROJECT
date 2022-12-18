@@ -1,23 +1,16 @@
-package GUI.views;
+package gui.views;
 
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
-import java.util.Deque;
-import java.util.Iterator;
-import java.util.PriorityQueue;
-import java.util.Queue;
 
-import GUI.components.PButton;
-import GUI.components.TextAreaScroll;
+import gui.components.PButton;
+import gui.components.TextAreaScroll;
 import logic.*;
-import tree.BinaryTreeNode;
 
 public class CodePanel extends JPanel {
     private JLabel phraseLabel;

@@ -1,6 +1,6 @@
-package GUI.views;
+package gui.views;
 
-import GUI.views.tree_components.Node;
+import gui.views.draw.Node;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 import org.jdesktop.animation.timing.interpolation.PropertySetter;

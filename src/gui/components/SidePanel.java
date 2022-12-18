@@ -1,9 +1,4 @@
-package GUI.components;
-
-import GUI.App;
-import GUI.views.CodePanel;
-import GUI.views.DecodePanel;
-import GUI.views.HelpPanel;
+package gui.components;
 
 import javax.swing.*;
 import java.awt.*;
