@@ -15,30 +15,36 @@ public class HuffmanFile {
     public static String load(File file){
         try {
             RandomAccessFile raf = new RandomAccessFile(file, "rw");
-
-            //get binary code
-            byte[] codeByte = new byte[raf.readInt()];
-            raf.read(codeByte);
-            BitSet bitset = BitSet.valueOf(codeByte);
-            String code = "";
-            for(int i = 0; i < bitset.length(); i++) {
-                if(bitset.get(i)) {
-                    code += "1";
-                } else {
-                    code += "0";
+            byte[]password= new byte[raf.readInt()];
+            raf.read(password);
+            if (password[0]=='H'&&password[1]=='T') {
+                //get binary code
+                byte[] codeByte = new byte[raf.readInt()];
+                raf.read(codeByte);
+                BitSet bitset = BitSet.valueOf(codeByte);
+                String code = "";
+                for(int i = 0; i < bitset.length(); i++) {
+                    if(bitset.get(i)) {
+                        code += "1";
+                    } else {
+                        code += "0";
+                    }
                 }
+                //get queue
+                long size = raf.length();
+                PriorityQueue<BinaryTreeNode<HuffmanNode>> queue = new PriorityQueue<>(Comparator.comparingInt(node -> node.getInfo().getFrequency()));
+                while (raf.getFilePointer()<size){
+                    char character = raf.readChar();
+                    int frequency = raf.readInt();
+                    queue.offer(new BinaryTreeNode<>(new HuffmanLeaf(frequency, character)));
+                }
+                raf.close();
+                Huffman.createHuffman(queue);
+                return Huffman.huffmanDecoding(code);
+            }else{
+                throw new Exception();
             }
-            //get queue
-            long size = raf.length();
-            PriorityQueue<BinaryTreeNode<HuffmanNode>> queue = new PriorityQueue<>(Comparator.comparingInt(node -> node.getInfo().getFrequency()));
-            while (raf.getFilePointer()<size){
-                char character = raf.readChar();
-                int frequency = raf.readInt();
-                queue.offer(new BinaryTreeNode<>(new HuffmanLeaf(frequency, character)));
-            }
-            raf.close();
-            Huffman.createHuffman(queue);
-            return Huffman.huffmanDecoding(code);
+
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -55,7 +61,10 @@ public class HuffmanFile {
                 bitcounter++;
             }
             byte[] data = bitSet.toByteArray();
+            byte[] password = {'H','T'};
             RandomAccessFile out = new RandomAccessFile(directory,"rw");
+            out.writeInt(2);
+            out.write(password);
             out.writeInt(data.length);
             out.write(data);
             PriorityQueue<BinaryTreeNode<HuffmanNode>> queue = Huffman.processString(phrase);
