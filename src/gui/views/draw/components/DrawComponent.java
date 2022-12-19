@@ -1,4 +1,4 @@
-package gui.views.draw;
+package gui.views.draw.components;
 
 import java.awt.*;
 

@@ -24,7 +24,7 @@ public class CodePanel extends JPanel {
     private JLabel outputLabel;
     private TextAreaScroll outputCodeText;
     private JPanel tarjetPanelTree;
-    private JPanel treePanel;
+    private TreeAnimate treePanel;
     private String phrase;
     private String code;
     public CodePanel(JPanel panel) {
@@ -40,6 +40,9 @@ public class CodePanel extends JPanel {
         add(getCopyButton());
         add(getSendButton());
         add(getTreeButton());
+
+        treePanel = new TreeAnimate();
+        tarjetPanelTree.add(treePanel);
     }
 
     public JLabel getPhraseLabel(){
@@ -149,11 +152,11 @@ public class CodePanel extends JPanel {
                 public void actionPerformed(ActionEvent e) {
                     //show tree
                     if (Huffman.isHuffmanCreated()){
-                        treePanel = new TreeAnimate(getPhraseText().getText());
-                        tarjetPanelTree.add(treePanel);
+
                         treePanel.setLayout(null);
                         treePanel.setBounds(0,0,tarjetPanelTree.getWidth(),tarjetPanelTree.getHeight());
                         treePanel.setBackground(tarjetPanelTree.getBackground());
+                        treePanel.init(phrase);
                         outer().setVisible(false);
                     }
 
