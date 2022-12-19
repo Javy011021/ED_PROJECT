@@ -1,5 +1,6 @@
 package gui.views.draw.rooms;
 
+import gui.views.TreeAnimate;
 import gui.views.draw.components.AllCharacters;
 import gui.views.draw.components.Arrow;
 import gui.views.draw.components.Node;
@@ -12,20 +13,24 @@ import org.jdesktop.animation.timing.interpolation.PropertySetter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Map;
 
 public class Step1 extends JPanel implements Step {
-    String message;
-    Animator animator;
-    ArrayList<Node> nodes;
-    ArrayList<Arrow> arrows;
-    Text text;
-    Text subText;
-    AllCharacters charactersMap;
+    private String message;
+    private Animator animator;
+    private ArrayList<Node> nodes;
+    private ArrayList<Arrow> arrows;
+    private Text text;
+    private Text subText;
+    private AllCharacters charactersMap;
+    private TreeAnimate treePanel;
 
 
-    public Step1(String message){
+    public Step1(String message, TreeAnimate treePanel){
+        this.treePanel=treePanel;
         this.message=message;
         nodes = new ArrayList<>();
         nodes.add(new Node(Color.BLUE,new Dimension(20,20),new Point(20,20),"a",20));
@@ -34,7 +39,7 @@ public class Step1 extends JPanel implements Step {
         charactersMap = new AllCharacters(new Color(0,0,0,0),new Dimension(300,0),new Point(250,200), Huffman.getFrequency(message));
 
     }
-
+    @Override
     public void start(){
         anim();
     }
@@ -104,6 +109,13 @@ public class Step1 extends JPanel implements Step {
                     }
                 });
                 animator.start();
+                setTimeout( e3 -> addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        super.mouseClicked(e);
+                        treePanel.start(2);
+                    }
+                }),2000);
             },2000);
         },1000);
 
