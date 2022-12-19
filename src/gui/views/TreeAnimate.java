@@ -21,7 +21,7 @@ public class TreeAnimate extends JPanel {
                 new Step2(message,this),
                 new Step3(message,this)
         ));
-        this.step = 0;
+        this.step = 2;
         for (JPanel stepPanel: stepPanels){
             this.add(stepPanel);
             stepPanel.setLayout(null);
@@ -29,6 +29,7 @@ public class TreeAnimate extends JPanel {
             stepPanel.setBackground(this.getBackground());
 
         }
+        this.setVisible(true);
         start(step);
     }
 
@@ -36,6 +37,7 @@ public class TreeAnimate extends JPanel {
         for (JPanel panel: stepPanels){
             panel.setVisible(false);
         }
+        step--;
         stepPanels.get(step).setVisible(true);
         ((Step)stepPanels.get(step)).start();
     }

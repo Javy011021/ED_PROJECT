@@ -1,5 +1,7 @@
 package gui.components;
 
+import gui.views.TreeAnimate;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -70,6 +72,12 @@ public class BarOptions extends JPanel{
                 activePanel.setVisible(false);
                 panel.setVisible(true);
                 activePanel=panel;
+                for (Component comp:contentPanel.getComponents()){
+                    if (comp instanceof TreeAnimate){
+                        //Stop animations
+                        comp.setVisible(false);
+                    }
+                }
             }
         });
     }

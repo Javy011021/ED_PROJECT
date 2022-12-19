@@ -9,6 +9,7 @@ import logic.Huffman;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 import org.jdesktop.animation.timing.interpolation.PropertySetter;
+import logic.TimerInterval;
 
 import javax.swing.*;
 import java.awt.*;
@@ -91,7 +92,7 @@ public class Step1 extends JPanel implements Step {
             animator.stop();
         }
         animator = PropertySetter.createAnimator(1000,text,"color",text.getColor(),new Color(0,0,0,255));
-        setTimeout( e -> {
+        TimerInterval.setTimeout( e -> {
             animator = PropertySetter.createAnimator(1000,subText,"color",subText.getColor(), new Color(0,0,0,255));
             animator.addTarget(new TimingTargetAdapter(){
                 @Override
@@ -100,7 +101,7 @@ public class Step1 extends JPanel implements Step {
                 }
             });
             animator.start();
-            setTimeout( e2 -> {
+            TimerInterval.setTimeout( e2 -> {
                 animator = PropertySetter.createAnimator(1000,charactersMap,"color",charactersMap.getColor(), new Color(0,0,0,255));
                 animator.addTarget(new TimingTargetAdapter(){
                     @Override
@@ -109,7 +110,7 @@ public class Step1 extends JPanel implements Step {
                     }
                 });
                 animator.start();
-                setTimeout( e3 -> addMouseListener(new MouseAdapter() {
+                TimerInterval.setTimeout( e3 -> addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
                         super.mouseClicked(e);
@@ -137,9 +138,5 @@ public class Step1 extends JPanel implements Step {
         g.drawString(frequency,(x+width/2)+3,y+20);
     }
 
-    private void setTimeout(ActionListener action, int time){
-        Timer t = new Timer(time,action);
-        t.setRepeats(false);
-        t.start();
-    }
+
 }
