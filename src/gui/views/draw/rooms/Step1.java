@@ -22,8 +22,7 @@ import java.util.Map;
 public class Step1 extends JPanel implements Step {
     private String message;
     private Animator animator;
-    private ArrayList<Node> nodes;
-    private ArrayList<Arrow> arrows;
+
     private Text text;
     private Text subText;
     private AllCharacters charactersMap;
@@ -33,8 +32,7 @@ public class Step1 extends JPanel implements Step {
     public Step1(String message, TreeAnimate treePanel){
         this.treePanel=treePanel;
         this.message=message;
-        nodes = new ArrayList<>();
-        nodes.add(new Node(Color.BLUE,new Dimension(20,20),new Point(20,20),"a",20));
+
         text = new Text(new Color(0,0,0,0),new Dimension(50,0),new Point(325,80),"Step 1");
         subText = new Text(new Color(0,0,0,0),new Dimension(20,0),new Point(200,120),"Separate characters with their frequencies");
         charactersMap = new AllCharacters(new Color(0,0,0,0),new Dimension(300,0),new Point(250,200), Huffman.getFrequency(message));
@@ -77,11 +75,7 @@ public class Step1 extends JPanel implements Step {
             currentY+=20;
         }
 
-        Node node=nodes.get(0);
-        g2.setColor(node.getColor());
-        g2.fillOval((int)node.getLocation().getX(),(int)node.getLocation().getY(),(int)node.getSize().getWidth(),(int)node.getSize().getHeight());
-        g2.setColor(Color.black);
-        g2.drawString(node.getCharacter(),(int)node.getLocation().getX(),(int)node.getLocation().getY());
+
         g2.dispose();
 
 
@@ -115,6 +109,7 @@ public class Step1 extends JPanel implements Step {
                     public void mouseClicked(MouseEvent e) {
                         super.mouseClicked(e);
                         treePanel.start(2);
+                        removeMouseListener(this);
                     }
                 }),2000);
             },2000);

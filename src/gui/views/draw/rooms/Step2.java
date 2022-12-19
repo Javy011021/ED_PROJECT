@@ -63,6 +63,7 @@ public class Step2 extends JPanel implements Step {
             drawCeld(g2, String.valueOf(leaf.getCharacter()), String.valueOf(leaf.getFrequency()),currentX,currentY,width);
             currentX+=width;
         }
+        g2.dispose();
     }
 
     private void anim(){
@@ -93,6 +94,7 @@ public class Step2 extends JPanel implements Step {
                     public void mouseClicked(MouseEvent e) {
                         super.mouseClicked(e);
                         treePanel.start(3);
+                        removeMouseListener(this);
                     }
                 }),2000);
             },2000);
