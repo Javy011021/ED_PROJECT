@@ -21,13 +21,9 @@ w
 G.idea/sonarlint/issuestore/b/c/bcee02042c99b806baef0c8e45d865c6f947bc31,4\a\4a47b2961d335946761ee70f588844b9147e69e2
 R
 ".idea/artifacts/ED_Project_jar.xml,9\c\9ca686d2adea23c18b1ecb8fe93eb2865692c00f
-H
-src/META-INF/MANIFEST.MF,e\4\e4b1fd2293ba1e598e6bec4e0ee3b6b6851eb5a2
 D
 src/logic/Email.java,d\0\d0f74d3f75b9e470469743a522f8db08632486b3
 Q
 !src/GUI/components/SidePanel.java,a\b\abe018d6e33d233bda05182fff6b4eaca25dea7e
 F
 src/logic/Convert.java,1\0\105175d637081575e4be6ea53876e3f016f4b85a
-J
-src/logic/HuffmanFile.java,4\c\4cc756ce63aa9537343281a1cb0be10a2799b216

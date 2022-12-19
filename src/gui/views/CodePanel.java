@@ -25,6 +25,8 @@ public class CodePanel extends JPanel {
     private TextAreaScroll outputCodeText;
     private JPanel tarjetPanelTree;
     private JPanel treePanel;
+    private String phrase;
+    private String code;
     public CodePanel(JPanel panel) {
         super();
         tarjetPanelTree = panel;
@@ -63,7 +65,8 @@ public class CodePanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     //call huffman
-                    String code = Huffman.createHuffman(phraseText.getText());
+                    phrase=phraseText.getText();
+                    code = Huffman.createHuffman(phrase);
                     refreshOutput(code);
                 }
             });
@@ -92,7 +95,7 @@ public class CodePanel extends JPanel {
             copyButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    StringSelection stringSelection = new StringSelection(getOutputCodeLabel().getText());
+                    StringSelection stringSelection = new StringSelection(code);
                     Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                     clipboard.setContents(stringSelection, null);
                 }
@@ -108,13 +111,15 @@ public class CodePanel extends JPanel {
             saveButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    FileDialog dialog = new FileDialog((Frame)null, "Save file");
-                    dialog.setMode(FileDialog.SAVE);
-                    dialog.setLocationRelativeTo(dialog.getOwner());
-                    dialog.setVisible(true);
-                    String file = dialog.getDirectory()+dialog.getFile();
-                    dialog.dispose();
-                    HuffmanFile.save(file,getPhraseText().getText(),getOutputCodeLabel().getText());
+                    if (Huffman.isHuffmanCreated()) {
+                        FileDialog dialog = new FileDialog((Frame) null, "Save file");
+                        dialog.setMode(FileDialog.SAVE);
+                        dialog.setLocationRelativeTo(dialog.getOwner());
+                        dialog.setVisible(true);
+                        String file = dialog.getDirectory() + dialog.getFile();
+                        dialog.dispose();
+                        HuffmanFile.save(file, phrase, code);
+                    }
                 }
             });
         }
@@ -143,12 +148,15 @@ public class CodePanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     //show tree
-                    treePanel = new TreeAnimate();
-                    tarjetPanelTree.add(treePanel);
-                    treePanel.setLayout(null);
-                    treePanel.setBounds(0,0,tarjetPanelTree.getWidth(),tarjetPanelTree.getHeight());
-                    treePanel.setBackground(tarjetPanelTree.getBackground());
-                    outer().setVisible(false);
+                    if (Huffman.isHuffmanCreated()){
+                        treePanel = new TreeAnimate(getPhraseText().getText());
+                        tarjetPanelTree.add(treePanel);
+                        treePanel.setLayout(null);
+                        treePanel.setBounds(0,0,tarjetPanelTree.getWidth(),tarjetPanelTree.getHeight());
+                        treePanel.setBackground(tarjetPanelTree.getBackground());
+                        outer().setVisible(false);
+                    }
+
 
                 }
             });
@@ -162,14 +170,13 @@ public class CodePanel extends JPanel {
         if (outputLabel==null) {
             outputLabel = new JLabel("Output: ");
             outputLabel.setBounds(10, 300, 50, 20);
-
         }
         return outputLabel;
     }
     public TextAreaScroll getOutputCodeLabel(){
         if (outputCodeText==null) {
             outputCodeText = new TextAreaScroll(10, 320, 800, 200);
-
+            outputCodeText.getTextArea().setEnabled(false);
         }
         return outputCodeText;
     }
