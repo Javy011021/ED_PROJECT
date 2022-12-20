@@ -9,6 +9,11 @@ public class TextAreaScroll extends JScrollPane {
         this.setViewportView(getPhraseText());
     }
 
+    public TextAreaScroll(String text){
+        this.setViewportView(getPhraseText());
+        getPhraseText().setText(text);
+    }
+
     public TextAreaScroll(int x, int y, int width, int height){
         this.setBounds(x,y,width,height);
         this.setViewportView(getPhraseText());

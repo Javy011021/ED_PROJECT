@@ -4,6 +4,7 @@ import gui.components.*;
 import gui.views.CodePanel;
 import gui.views.DecodePanel;
 import gui.views.HelpPanel;
+import gui.views.InfoPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -73,6 +74,7 @@ public class App extends JFrame{
             options.addOption(new BarOption("Code"), new CodePanel(getBodyPanel()),true);
             options.addOption(new BarOption("Decode"), new DecodePanel());
             options.addOption(new BarOption("Help"), new HelpPanel());
+            options.addOption(new BarOption("Info"), new InfoPanel());
 
         }
         return options;

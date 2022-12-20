@@ -25,10 +25,6 @@ w
 G.idea/sonarlint/issuestore/4/a/4a47b2961d335946761ee70f588844b9147e69e2,6\e\6edf5d10e95485c88a4d22a1417f16101f4e3a1c
 H
 src/META-INF/MANIFEST.MF,e\4\e4b1fd2293ba1e598e6bec4e0ee3b6b6851eb5a2
-L
-src/gui/views/HelpPanel.java,c\c\cc985ea20032fdfce854f7d5daaa9b52c466b8b4
-N
-src/gui/views/DecodePanel.java,7\a\7a238a9a0bc7cc679238ce9291c24c4043b35f2a
 `
 0src/gui/views/draw/components/DrawComponent.java,9\9\99e39b752d2e2bfa825b9a4983d77f9cc5891ca4
 W
@@ -37,8 +33,6 @@ J
 src/logic/HuffmanLeaf.java,b\c\bcee02042c99b806baef0c8e45d865c6f947bc31
 >
 ED_Project.iml,b\a\bab6e832b78084e0acaca374eb1e81dcb3ba06d3
-F
-src/logic/Huffman.java,f\b\fb612945d078deb32acfb65ee44e1305a2d115aa
 w
 G.idea/sonarlint/issuestore/6/7/67e95ce47a381083abdc00abdb66a376c74bbf24,a\9\a9e5a6cf7286cbd2f3444aea280420fad9dfb7e6
 w
