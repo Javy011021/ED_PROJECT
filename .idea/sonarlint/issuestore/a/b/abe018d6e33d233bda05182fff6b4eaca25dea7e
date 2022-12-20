@@ -1,0 +1,10 @@
+
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¹éÚ—ûÿÿÿÿ
+?
+java:S1128"$Remove this unused import 'GUI.App'.(ŠüôÞýÿÿÿÿ
+K
+java:S1128"0Remove this unused import 'GUI.views.CodePanel'.(”þäÈüÿÿÿÿ
+M
+java:S1128"2Remove this unused import 'GUI.views.DecodePanel'.(¿’ì™úÿÿÿÿ
+K
+java:S1128"0Remove this unused import 'GUI.views.HelpPanel'.(»“òïþÿÿÿÿ
