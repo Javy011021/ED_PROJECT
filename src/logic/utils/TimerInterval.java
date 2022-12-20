@@ -24,9 +24,9 @@ public class TimerInterval {
     public static void fade(DrawComponent component, boolean fadeOut, JPanel panel){
         Color color = component.getColor();
         Animator animator = PropertySetter.createAnimator(1000,component,"color",color, new Color(color.getRed(),color.getGreen(),color.getBlue(),fadeOut?0:255));
-        animator.addTarget(new TimingTargetAdapter(){
+        animator.addTarget(new TimingTargetAdapter() {
             @Override
-            public void timingEvent(float fraction){
+            public void timingEvent(float fraction) {
                 panel.repaint();
             }
         });
@@ -41,22 +41,23 @@ public class TimerInterval {
                 DrawComponent component=components.get(i);
                 color = component.getColor();
                 animator.addTarget(new PropertySetter(component,"color",color, new Color(color.getRed(),color.getGreen(),color.getBlue(),fadeOut?0:255)));
-                animator.addTarget(new TimingTargetAdapter(){
-                    @Override
-                    public void timingEvent(float fraction){
-                        panel.repaint();
-                    }
-                });
+
             }
+            animator.addTarget(new TimingTargetAdapter() {
+                @Override
+                public void timingEvent(float fraction) {
+                    panel.repaint();
+                }
+            });
             animator.start();
         }
     }
 
     public static void move(DrawComponent component, Point destiny, JPanel panel){
         Animator animator = PropertySetter.createAnimator(1000, component, "location", component.getLocation(), destiny);
-        animator.addTarget(new TimingTargetAdapter(){
+        animator.addTarget(new TimingTargetAdapter() {
             @Override
-            public void timingEvent(float fraction){
+            public void timingEvent(float fraction) {
                 panel.repaint();
             }
         });

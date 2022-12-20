@@ -139,63 +139,65 @@ public class Step3 extends JPanel implements Step {
     }
 
     private void nextNode(){
-        Node left = queueNodes.poll();
-        Node right = queueNodes.poll();
-        assert right != null && left != null;
-        int amount = left.getFrequency()+right.getFrequency();
-        Node upNode = countLevels(left)>countLevels(right)?left:right;
-        Node downNode = countLevels(left)>countLevels(right)?right:left;
-        int size = (int)upNode.getSize().getWidth();
-        int distance = (int)(Math.abs(upNode.getLocation().getX()-getLastLeft(upNode).getLocation().getX()))+size+5;
-        Node newNode = new Node(new Color(0,120,255,0),new Dimension(50,50),new Point((int)upNode.getLocation().getX()-distance,(int)upNode.getLocation().getY()-(size*2)),"",amount);
-        newNode.setLeft(downNode);
-        newNode.setRight(upNode);
-        nodes.add(newNode);
-        TimerInterval.fade(newNode,false,this);
-        TimerInterval.setTimeout(e -> {
-            //move down node
-            AtomicReference<Point> oldPos = new AtomicReference<>(downNode.getLocation());
-            AtomicReference<Point> newPos = new AtomicReference<>(new Point((int) upNode.getLocation().getX() - distance * 2, (int) upNode.getLocation().getY()));
-            AtomicReference<Point> vector = new AtomicReference<>(new Point((int) (newPos.get().getX() - oldPos.get().getX()), (int) (newPos.get().getY() - oldPos.get().getY())));
-            TimerInterval.move(downNode, newPos.get(),this);
-            TimerInterval.move(getChilds(downNode),vector.get(), this);
-            TimerInterval.setTimeout(e3 ->{
-                //move new node
-                newPos.set(new Point((int) (oldPos.get().getX() + upNode.getLocation().getX()) / 2, (int) newNode.getLocation().getY()));
-                oldPos.set(newNode.getLocation());
-                vector.set(new Point((int) (newPos.get().getX() - oldPos.get().getX()), (int) (newPos.get().getY() - oldPos.get().getY())));
-                TimerInterval.move(newNode, newPos.get(),this);
-                TimerInterval.move(getChilds(newNode),vector.get(), this);
-                queueNodes.offer(newNode);
-                //base case
-                if (queueNodes.size()>1){
-                    TimerInterval.setTimeout( e2 -> nextNode(),1000);
-                }else{
-                    TimerInterval.setTimeout( e2 -> {
-                        addMouseListener(new MouseAdapter() {
-                            @Override
-                            public void mousePressed(MouseEvent e) {
-                                super.mousePressed(e);
-                                mouse=e.getPoint();
-                            }
-                        });
-                        addMouseMotionListener(new MouseAdapter() {
-                            @Override
-                            public void mouseDragged(MouseEvent e) {
-                                super.mouseDragged(e);
-                                Point vector = new Point((int)(e.getX()-mouse.getX()),(int)(e.getY()-mouse.getY()));
-                                mouse=e.getPoint();
-                                for (DrawComponent draw: nodes){
-                                    draw.setLocation(new Point((int)(draw.getLocation().getX()+vector.getX()),(int)(draw.getLocation().getY()+vector.getY())));
+        if ((queueNodes.size()>1)) {
+            Node left = queueNodes.poll();
+            Node right = queueNodes.poll();
+            assert right != null && left != null;
+            int amount = left.getFrequency() + right.getFrequency();
+            Node upNode = countLevels(left) > countLevels(right) ? left : right;
+            Node downNode = countLevels(left) > countLevels(right) ? right : left;
+            int size = (int) upNode.getSize().getWidth();
+            int distance = (int) (Math.abs(upNode.getLocation().getX() - getLastLeft(upNode).getLocation().getX())) + size + 5;
+            Node newNode = new Node(new Color(0, 120, 255, 0), new Dimension(50, 50), new Point((int) upNode.getLocation().getX() - distance, (int) upNode.getLocation().getY() - (size * 2)), "", amount);
+            newNode.setLeft(downNode);
+            newNode.setRight(upNode);
+            nodes.add(newNode);
+            TimerInterval.fade(newNode, false, this);
+            TimerInterval.setTimeout(e -> {
+                //move down node
+                AtomicReference<Point> oldPos = new AtomicReference<>(downNode.getLocation());
+                AtomicReference<Point> newPos = new AtomicReference<>(new Point((int) upNode.getLocation().getX() - distance * 2, (int) upNode.getLocation().getY()));
+                AtomicReference<Point> vector = new AtomicReference<>(new Point((int) (newPos.get().getX() - oldPos.get().getX()), (int) (newPos.get().getY() - oldPos.get().getY())));
+                TimerInterval.move(downNode, newPos.get(), this);
+                TimerInterval.move(getChilds(downNode), vector.get(), this);
+                TimerInterval.setTimeout(e3 -> {
+                    //move new node
+                    newPos.set(new Point((int) (oldPos.get().getX() + upNode.getLocation().getX()) / 2, (int) newNode.getLocation().getY()));
+                    oldPos.set(newNode.getLocation());
+                    vector.set(new Point((int) (newPos.get().getX() - oldPos.get().getX()), (int) (newPos.get().getY() - oldPos.get().getY())));
+                    TimerInterval.move(newNode, newPos.get(), this);
+                    TimerInterval.move(getChilds(newNode), vector.get(), this);
+                    queueNodes.offer(newNode);
+                    //base case
+                    if (queueNodes.size() > 1) {
+                        TimerInterval.setTimeout(e2 -> nextNode(), 1000);
+                    } else {
+                        TimerInterval.setTimeout(e2 -> {
+                            addMouseListener(new MouseAdapter() {
+                                @Override
+                                public void mousePressed(MouseEvent e) {
+                                    super.mousePressed(e);
+                                    mouse = e.getPoint();
                                 }
-                                repaint();
-                            }
-                        });
+                            });
+                            addMouseMotionListener(new MouseAdapter() {
+                                @Override
+                                public void mouseDragged(MouseEvent e) {
+                                    super.mouseDragged(e);
+                                    Point vector = new Point((int) (e.getX() - mouse.getX()), (int) (e.getY() - mouse.getY()));
+                                    mouse = e.getPoint();
+                                    for (DrawComponent draw : nodes) {
+                                        draw.setLocation(new Point((int) (draw.getLocation().getX() + vector.getX()), (int) (draw.getLocation().getY() + vector.getY())));
+                                    }
+                                    repaint();
+                                }
+                            });
 
-                    },1000);
-                }
-            },1000);
-        },1000);
+                        }, 1000);
+                    }
+                }, 1000);
+            }, 1000);
+        }
     }
 
     private List<DrawComponent> getChilds(Node node){
