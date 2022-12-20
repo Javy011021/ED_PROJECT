@@ -13,6 +13,9 @@ import tree.BinaryTreeNode;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -21,11 +24,13 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class Step3 extends JPanel implements Step {
     private Animator animator;
+    private Point mouse;
     private List<DrawComponent> nodes;
     private Text text;
     private Text subText;
     private PriorityQueue<Node> queueNodes;
     private String message;
+    private JPanel treeArea;
     private TreeAnimate treePanel;
     public Step3(String message, TreeAnimate treePanel){
         this.message=message;
@@ -166,6 +171,29 @@ public class Step3 extends JPanel implements Step {
                 //base case
                 if (queueNodes.size()>1){
                     TimerInterval.setTimeout( e2 -> nextNode(),1000);
+                }else{
+                    TimerInterval.setTimeout( e2 -> {
+                        addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mousePressed(MouseEvent e) {
+                                super.mousePressed(e);
+                                mouse=e.getPoint();
+                            }
+                        });
+                        addMouseMotionListener(new MouseAdapter() {
+                            @Override
+                            public void mouseDragged(MouseEvent e) {
+                                super.mouseDragged(e);
+                                Point vector = new Point((int)(e.getX()-mouse.getX()),(int)(e.getY()-mouse.getY()));
+                                mouse=e.getPoint();
+                                for (DrawComponent draw: nodes){
+                                    draw.setLocation(new Point((int)(draw.getLocation().getX()+vector.getX()),(int)(draw.getLocation().getY()+vector.getY())));
+                                }
+                                repaint();
+                            }
+                        });
+
+                    },1000);
                 }
             },1000);
         },1000);
