@@ -37,8 +37,6 @@ H
 src/gui/Definitions.java,a\f\af9824c4e193ccaf66943ca706a3f24a69079412
 L
 src/gui/views/HelpPanel.java,c\c\cc985ea20032fdfce854f7d5daaa9b52c466b8b4
-J
-src/logic/HuffmanFile.java,4\c\4cc756ce63aa9537343281a1cb0be10a2799b216
 V
 &src/gui/components/TextAreaScroll.java,e\3\e37cbb52391dfed772b27d14783b38e2ca58223a
 N

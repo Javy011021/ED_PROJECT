@@ -10,20 +10,15 @@ import logic.HuffmanLeaf;
 import logic.HuffmanNode;
 import logic.TimerInterval;
 import org.jdesktop.animation.timing.Animator;
-import org.jdesktop.animation.timing.TimingTargetAdapter;
-import org.jdesktop.animation.timing.interpolation.PropertySetter;
-import tree.BinaryTree;
 import tree.BinaryTreeNode;
 
 import javax.swing.*;
-import javax.xml.stream.Location;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Step3 extends JPanel implements Step {
     private Animator animator;
@@ -46,7 +41,6 @@ public class Step3 extends JPanel implements Step {
         nodes = new ArrayList<>();
         PriorityQueue<BinaryTreeNode<HuffmanNode>> queue = Huffman.processString(message);
         int currentX = (int)(getBounds().getWidth()/2)-queue.size()*100/2;
-        int bounds = (int)(getBounds().getWidth());
         for (BinaryTreeNode<HuffmanNode> btn: queue){
             HuffmanLeaf node = (HuffmanLeaf) btn.getInfo();
             queueNodes.offer(new Node(new Color(0,150,0,0),new Dimension(50,50),null,String.valueOf(node.getCharacter()), node.getFrequency()));
@@ -56,9 +50,11 @@ public class Step3 extends JPanel implements Step {
         while (!queue.isEmpty()){
             HuffmanLeaf node = (HuffmanLeaf)queue.poll().getInfo();
             Node nod = findNode(String.valueOf(node.getCharacter()));
-            nod.setLocation(new Point(currentX, 500));
-            nodes.add(nod);
-            currentX+=nod.getSize().getWidth()*2;
+            if (nod!=null){
+                nod.setLocation(new Point(currentX, 500));
+                nodes.add(nod);
+                currentX += nod.getSize().getWidth() * 2;
+            }
 
         }
         anim();
@@ -118,6 +114,7 @@ public class Step3 extends JPanel implements Step {
     private void nextNode(){
         Node left = queueNodes.poll();
         Node right = queueNodes.poll();
+        assert right != null && left != null;
         int amount = left.getFrequency()+right.getFrequency();
         Node upNode = countLevels(left)>countLevels(right)?left:right;
         Node downNode = countLevels(left)>countLevels(right)?right:left;
@@ -127,27 +124,31 @@ public class Step3 extends JPanel implements Step {
         newNode.setLeft(downNode);
         newNode.setRight(upNode);
         nodes.add(newNode);
+        TimerInterval.fade(newNode,false,this);
+        TimerInterval.setTimeout(e -> {
+            //move down node
+            AtomicReference<Point> oldPos = new AtomicReference<>(downNode.getLocation());
+            AtomicReference<Point> newPos = new AtomicReference<>(new Point((int) upNode.getLocation().getX() - distance * 2, (int) upNode.getLocation().getY()));
+            AtomicReference<Point> vector = new AtomicReference<>(new Point((int) (newPos.get().getX() - oldPos.get().getX()), (int) (newPos.get().getY() - oldPos.get().getY())));
+            TimerInterval.move(downNode, newPos.get(),this);
+            moveChilds(downNode, vector.get());
+            TimerInterval.setTimeout(e3 ->{
+                //move new node
+                newPos.set(new Point((int) (oldPos.get().getX() + upNode.getLocation().getX()) / 2, (int) newNode.getLocation().getY()));
+                oldPos.set(newNode.getLocation());
+                vector.set(new Point((int) (newPos.get().getX() - oldPos.get().getX()), (int) (newPos.get().getY() - oldPos.get().getY())));
+                TimerInterval.move(newNode, newPos.get(),this);
+                moveChilds(newNode, vector.get());
 
-        //move down node
-        Point oldPos = downNode.getLocation();
-        Point newPos = new Point((int)upNode.getLocation().getX()-distance*2,(int)upNode.getLocation().getY());
-        Point vector = new Point((int)(newPos.getX()-oldPos.getX()),(int)(newPos.getY()-oldPos.getY()));
-        downNode.setLocation(newPos);
-        moveChilds(downNode,vector);
 
-        //move new node
-        newPos = new Point((int)(oldPos.getX()+upNode.getLocation().getX())/2,(int)newNode.getLocation().getY());
-        oldPos = newNode.getLocation();
-        vector = new Point((int)(newPos.getX()-oldPos.getX()),(int)(newPos.getY()-oldPos.getY()));
-        newNode.setLocation(newPos);
-        moveChilds(newNode, vector);
+                queueNodes.offer(newNode);
+                if (queueNodes.size()>1){
+                    TimerInterval.setTimeout( e2 -> nextNode(),1000);
+                }
+            },1000);
 
+        },1000);
 
-        queueNodes.offer(newNode);
-        repaint();
-        if (queueNodes.size()>1){
-            TimerInterval.setTimeout( e -> nextNode(),1000);
-        }
 
     }
 
@@ -156,11 +157,11 @@ public class Step3 extends JPanel implements Step {
         Node left=node.getLeft();
         Node right=node.getRight();
         if (left!=null){
-            left.setLocation(new Point((int)(left.getLocation().getX()+vector.getX()),(int)(left.getLocation().getY()+vector.getY())));
+            TimerInterval.move(left,new Point((int)(left.getLocation().getX()+vector.getX()),(int)(left.getLocation().getY()+vector.getY())),this);
             moveChilds(left, vector);
         }
         if (right!=null){
-            right.setLocation(new Point((int)(right.getLocation().getX()+vector.getX()),(int)(right.getLocation().getY()+vector.getY())));
+            TimerInterval.move(right,new Point((int)(right.getLocation().getX()+vector.getX()),(int)(right.getLocation().getY()+vector.getY())),this);
             moveChilds(right, vector);
         }
 
