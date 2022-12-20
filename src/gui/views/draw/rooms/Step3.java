@@ -150,7 +150,7 @@ public class Step3 extends JPanel implements Step {
         Node downNode = countLevels(left)>countLevels(right)?right:left;
         System.out.println(countLevels(left)+" "+countLevels(right));
         int size = (int)upNode.getSize().getWidth();
-        int distance = (int)(upNode.getLocation().getX()-getLastLeft(upNode).getLocation().getX()-size)+5;
+        int distance = (int)(Math.abs(upNode.getLocation().getX()-getLastLeft(upNode).getLocation().getX()))+size+5;
         Node newNode = new Node(Color.BLUE,new Dimension(50,50),new Point((int)upNode.getLocation().getX()-distance,(int)upNode.getLocation().getY()-(size*2)),"",amount);
         newNode.setLeft(downNode);
         newNode.setRight(upNode);
