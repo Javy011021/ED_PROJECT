@@ -1,9 +1,5 @@
 
 w
-G.idea/sonarlint/issuestore/9/7/97ed74509598d08c253786eb8914c1e841585e09,c\6\c659db84760447007bb19d25499ba455aee1e0c0
-w
-G.idea/sonarlint/issuestore/c/9/c9e39eaca1dd449ef8979be89f1929cfb4660662,d\e\dea24da63fdf6e70eee243bd26d31e2b2b9f7fcf
-w
 G.idea/sonarlint/issuestore/4/a/4adbee48e94ce3d954851e1fc9938279b95c37bd,c\a\ca7fe37c74566a83dbdca3251cbec30a5b3b1276
 w
 G.idea/sonarlint/issuestore/a/5/a5cc2925ca8258af241be7e5b0381edf30266302,e\d\ed67eb178d523a4b3f117dcbe0eda5196367ceec

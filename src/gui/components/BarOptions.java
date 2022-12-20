@@ -50,6 +50,7 @@ public class BarOptions extends JPanel{
         //Inherit from container
         panel.setLayout(null);
         panel.setBounds(0,0,contentPanel.getWidth(),contentPanel.getHeight());
+        System.out.println("2:" + contentPanel.getWidth());
         panel.setBackground(contentPanel.getBackground());
 
         //add option to options container

@@ -55,7 +55,8 @@ public class App extends JFrame{
         if (bodyPanel==null){
             bodyPanel = new JPanel();
             bodyPanel.setLayout(null);
-            bodyPanel.setBounds(sidePanel.getWidth()+6,6, this.getWidth()-bodyPanel.getX(), this.getHeight());
+            int x = sidePanel.getWidth()+6;
+            bodyPanel.setBounds(sidePanel.getWidth()+6,6, this.getWidth()-x, this.getHeight());
             bodyPanel.setBackground(Color.WHITE);
         }
         return bodyPanel;
@@ -64,6 +65,7 @@ public class App extends JFrame{
     public BarOptions getOptions(){
         if (options==null){
             options = new BarOptions(getBodyPanel(),60);
+            System.out.println("3: "+(getBodyPanel().getBounds()));
             options.setBackground(Color.WHITE);
             options.setBounds(10,160,sidePanel.getWidth()-10,500);
             options.addOption(new BarOption("Code"), new CodePanel(getBodyPanel()),true);

@@ -36,33 +36,30 @@ public class Step3 extends JPanel implements Step {
         this.message=message;
         this.treePanel=treePanel;
         this.queueNodes = new PriorityQueue<>(Comparator.comparingInt(Node::getFrequency));
+    }
+    @Override
+    public void start() {
         text = new Text(new Color(0,0,0,0),new Dimension(50,0),new Point(325,80),"Step 3");
         subText = new Text(new Color(0,0,0,0),new Dimension(20,0),new Point(310,120),"Generate binary tree");
         nodes = new ArrayList<>();
         PriorityQueue<BinaryTreeNode<HuffmanNode>> queue = Huffman.processString(message);
-        int currentX = 270;
-
+        int currentX = (int)(getBounds().getWidth()/2)-queue.size()*100/2;
+        int bounds = (int)(getBounds().getWidth());
         for (BinaryTreeNode<HuffmanNode> btn: queue){
             HuffmanLeaf node = (HuffmanLeaf) btn.getInfo();
-            queueNodes.add(new Node(new Color(0,150,0,0),new Dimension(50,50),null,String.valueOf(node.getCharacter()), node.getFrequency()));
+            queueNodes.offer(new Node(new Color(0,150,0,0),new Dimension(50,50),null,String.valueOf(node.getCharacter()), node.getFrequency()));
 
         }
 
         while (!queue.isEmpty()){
             HuffmanLeaf node = (HuffmanLeaf)queue.poll().getInfo();
-            System.out.println(node.getFrequency());
+            System.out.println(node.getCharacter());
             Node nod = findNode(String.valueOf(node.getCharacter()));
             nod.setLocation(new Point(currentX, 500));
             nodes.add(nod);
-            currentX+=100;
+            currentX+=nod.getSize().getWidth()*2;
 
         }
-
-
-
-    }
-    @Override
-    public void start() {
         anim();
     }
 
@@ -149,11 +146,12 @@ public class Step3 extends JPanel implements Step {
         Node left = queueNodes.poll();
         Node right = queueNodes.poll();
         int amount = left.getFrequency()+right.getFrequency();
-        Node upNode = countLevels(left)>=countLevels(right)?left:right;
-        Node downNode = countLevels(left)>=countLevels(right)?right:left;
+        Node upNode = countLevels(left)>countLevels(right)?left:right;
+        Node downNode = countLevels(left)>countLevels(right)?right:left;
         System.out.println(countLevels(left)+" "+countLevels(right));
-        int distance = 50*countLevels(upNode);
-        Node newNode = new Node(Color.BLUE,new Dimension(50,50),new Point((int)upNode.getLocation().getX()-distance,(int)upNode.getLocation().getY()-100),"",amount);
+        int size = (int)upNode.getSize().getWidth();
+        int distance = size*countLevels(upNode)+2;
+        Node newNode = new Node(Color.BLUE,new Dimension(50,50),new Point((int)upNode.getLocation().getX()-distance,(int)upNode.getLocation().getY()-(size*2)),"",amount);
         newNode.setLeft(downNode);
         newNode.setRight(upNode);
         downNode.setLocation(new Point((int)upNode.getLocation().getX()-distance*2,(int)upNode.getLocation().getY()));
