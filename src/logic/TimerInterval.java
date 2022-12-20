@@ -69,7 +69,7 @@ public class TimerInterval {
             Animator animator = PropertySetter.createAnimator(1000, components.get(0), "location", components.get(0).getLocation(), new Point((int)(components.get(0).getLocation().getX()+vector.getX()),(int)(components.get(0).getLocation().getY()+vector.getY())));
             for (int i=1; i<components.size(); i++){
                 DrawComponent component=components.get(i);
-                animator.addTarget(new PropertySetter(component, "location", components.get(0).getLocation(), new Point((int)(component.getLocation().getX()+vector.getX()),(int)(component.getLocation().getY()+vector.getY()))));
+                animator.addTarget(new PropertySetter(component, "location", component.getLocation(), new Point((int)(component.getLocation().getX()+vector.getX()),(int)(component.getLocation().getY()+vector.getY()))));
             }
             animator.addTarget(new TimingTargetAdapter() {
                 @Override

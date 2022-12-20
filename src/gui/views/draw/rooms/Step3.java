@@ -131,14 +131,14 @@ public class Step3 extends JPanel implements Step {
             AtomicReference<Point> newPos = new AtomicReference<>(new Point((int) upNode.getLocation().getX() - distance * 2, (int) upNode.getLocation().getY()));
             AtomicReference<Point> vector = new AtomicReference<>(new Point((int) (newPos.get().getX() - oldPos.get().getX()), (int) (newPos.get().getY() - oldPos.get().getY())));
             TimerInterval.move(downNode, newPos.get(),this);
-            moveChilds(downNode, vector.get());
+            TimerInterval.move(getChilds(downNode),vector.get(), this);
             TimerInterval.setTimeout(e3 ->{
                 //move new node
                 newPos.set(new Point((int) (oldPos.get().getX() + upNode.getLocation().getX()) / 2, (int) newNode.getLocation().getY()));
                 oldPos.set(newNode.getLocation());
                 vector.set(new Point((int) (newPos.get().getX() - oldPos.get().getX()), (int) (newPos.get().getY() - oldPos.get().getY())));
                 TimerInterval.move(newNode, newPos.get(),this);
-                moveChilds(newNode, vector.get());
+                TimerInterval.move(getChilds(newNode),vector.get(), this);
 
 
                 queueNodes.offer(newNode);
@@ -152,19 +152,19 @@ public class Step3 extends JPanel implements Step {
 
     }
 
-    private void moveChilds(Node node, Point vector){
-
+    private List<DrawComponent> getChilds(Node node){
+        ArrayList<DrawComponent> result = new ArrayList<>();
         Node left=node.getLeft();
         Node right=node.getRight();
         if (left!=null){
-            TimerInterval.move(left,new Point((int)(left.getLocation().getX()+vector.getX()),(int)(left.getLocation().getY()+vector.getY())),this);
-            moveChilds(left, vector);
+            result.add(left);
+            result.addAll(getChilds(left));
         }
         if (right!=null){
-            TimerInterval.move(right,new Point((int)(right.getLocation().getX()+vector.getX()),(int)(right.getLocation().getY()+vector.getY())),this);
-            moveChilds(right, vector);
+            result.add(right);
+            result.addAll(getChilds(right));
         }
-
+        return result;
     }
 
     private Node getLastLeft(Node node){
