@@ -11,6 +11,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Step1 extends JPanel implements Step {
@@ -29,7 +31,7 @@ public class Step1 extends JPanel implements Step {
 
         text = new Text(new Color(0,0,0,0),new Dimension(50,0),new Point(325,80),"Step 1");
         subText = new Text(new Color(0,0,0,0),new Dimension(20,0),new Point(200,120),"Separate characters with their frequencies");
-        charactersMap = new AllCharacters(new Color(0,0,0,0),new Dimension(300,0),new Point(250,200), Huffman.getFrequency(message));
+        charactersMap = new AllCharacters(new Color(0,0,0,0),new Dimension(200,16),new Point(250,200), Huffman.getFrequency(message));
 
     }
     @Override
@@ -56,20 +58,41 @@ public class Step1 extends JPanel implements Step {
         g2.drawString(subText.getPhrase(),(int)subText.getLocation().getX(), (int)subText.getLocation().getY());
 
         //Characters with frequency
-        g2.setColor(charactersMap.getColor());
-        int currentY = (int)charactersMap.getLocation().getY();
-        int currentX = (int)charactersMap.getLocation().getX();
-        int size = (int)charactersMap.getSize().getWidth();
-        g2.drawLine(currentX,currentY,currentX+size, currentY);
-        g2.setFont(new Font("Tahoma",Font.PLAIN,22));
-        drawRow(g2,"Character","Frequency",currentX,currentY,size);
-        currentY+=20;
+        List<List<Map.Entry<Character,Integer>>> lists = new ArrayList<>();
+        lists.add(new ArrayList<>());
+        int count=0;
+        int currentList=0;
         for (Map.Entry<Character, Integer> entry: charactersMap.getMap().entrySet()){
-            drawRow(g2,entry.getKey().toString(),entry.getValue().toString(),currentX,currentY,size);
-            currentY+=20;
+
+            if(count++==18){
+                count=1;
+                currentList++;
+                lists.add(new ArrayList<>());
+            }
+            lists.get(currentList).add(entry);
         }
 
+        //center
+        int margen = 20;
+        int size = (int)charactersMap.getSize().getWidth();
+        int currentX = this.getWidth()/2-((size*lists.size())+(lists.size()-1)*margen)/2;
+        int currentY = (int)charactersMap.getLocation().getY();
 
+        g2.setColor(charactersMap.getColor());
+
+        g2.setFont(new Font("Tahoma",Font.PLAIN,(int)charactersMap.getSize().getHeight()));
+
+        for (List<Map.Entry<Character, Integer>> list: lists){
+            g2.drawLine(currentX,currentY,currentX+size, currentY);
+            drawRow(g2,"Character","Frequency",currentX,currentY,size);
+            currentY+=20;
+            for (Map.Entry<Character, Integer> entry: list){
+                drawRow(g2,entry.getKey().toString(),entry.getValue().toString(),currentX,currentY,size);
+                currentY+=20;
+            }
+            currentY=(int)charactersMap.getLocation().getY();
+            currentX+=charactersMap.getSize().getWidth()+margen;
+        }
         g2.dispose();
 
 

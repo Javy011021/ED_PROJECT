@@ -60,12 +60,13 @@ public class Step2 extends JPanel implements Step {
         int count=0;
         int currentList=0;
         for (int i=0; i<characters.getCharacters().size(); i++){
-            lists.get(currentList).add(characters.getCharacters().get(i));
-            if(++count==18){
-                count=0;
+
+            if(count++==18){
+                count=1;
                 currentList++;
                 lists.add(new ArrayList<>());
             }
+            lists.get(currentList).add(characters.getCharacters().get(i));
         }
         for (int i=0; i<lists.size();i++){
             int currentX = ((this.getWidth()/2)-(lists.get(i).size()*width/2));
