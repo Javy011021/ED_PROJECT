@@ -65,7 +65,6 @@ public class App extends JFrame{
     public BarOptions getOptions(){
         if (options==null){
             options = new BarOptions(getBodyPanel(),60);
-            System.out.println("3: "+(getBodyPanel().getBounds()));
             options.setBackground(Color.WHITE);
             options.setBounds(10,160,sidePanel.getWidth()-10,500);
             options.addOption(new BarOption("Code"), new CodePanel(getBodyPanel()),true);
