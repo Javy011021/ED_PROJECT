@@ -5,7 +5,7 @@ import gui.views.draw.components.AllCharacters;
 import gui.views.draw.components.Text;
 import logic.Huffman;
 import org.jdesktop.animation.timing.Animator;
-import logic.TimerInterval;
+import logic.utils.TimerInterval;
 
 import javax.swing.*;
 import java.awt.*;

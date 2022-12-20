@@ -1,4 +1,4 @@
-package logic;
+package logic.utils;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;

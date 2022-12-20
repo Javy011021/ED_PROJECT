@@ -1,4 +1,4 @@
-/*  1:   */ package logic;
+/*  1:   */ package logic.utils;
 /*  2:   */ 
 /*  3:   */ import java.io.ByteArrayInputStream;
 /*  4:   */ import java.io.ByteArrayOutputStream;

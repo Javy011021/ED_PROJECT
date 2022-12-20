@@ -7,7 +7,7 @@ import gui.views.draw.components.Text;
 import logic.Huffman;
 import logic.HuffmanLeaf;
 import logic.HuffmanNode;
-import logic.TimerInterval;
+import logic.utils.TimerInterval;
 import org.jdesktop.animation.timing.Animator;
 import tree.BinaryTreeNode;
 
@@ -15,7 +15,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;

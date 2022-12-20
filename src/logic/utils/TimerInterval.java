@@ -1,4 +1,4 @@
-package logic;
+package logic.utils;
 
 import gui.views.draw.components.DrawComponent;
 import org.jdesktop.animation.timing.Animator;
