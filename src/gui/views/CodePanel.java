@@ -179,7 +179,7 @@ public class CodePanel extends JPanel {
     public TextAreaScroll getOutputCodeLabel(){
         if (outputCodeText==null) {
             outputCodeText = new TextAreaScroll(10, 320, 800, 200);
-            outputCodeText.getTextArea().setEnabled(false);
+            outputCodeText.getTextArea().setEditable(false);
         }
         return outputCodeText;
     }

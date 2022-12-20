@@ -5,18 +5,15 @@ import gui.views.draw.components.OrderedCharacters;
 import gui.views.draw.components.Text;
 import logic.Huffman;
 import logic.HuffmanLeaf;
-import logic.HuffmanNode;
-import logic.TimerInterval;
+import logic.utils.TimerInterval;
 import org.jdesktop.animation.timing.Animator;
-import org.jdesktop.animation.timing.TimingTargetAdapter;
-import org.jdesktop.animation.timing.interpolation.PropertySetter;
-import tree.BinaryTreeNode;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Step2 extends JPanel implements Step {
     private String message;
@@ -25,16 +22,26 @@ public class Step2 extends JPanel implements Step {
     private Text subText;
     private TreeAnimate treePanel;
     private OrderedCharacters characters;
+    private Text clickToContinue;
     public Step2(String message, TreeAnimate treePanel){
         this.message=message;
         this.treePanel=treePanel;
         text = new Text(new Color(0,0,0,0),new Dimension(50,0),new Point(325,80),"Step 2");
         subText = new Text(new Color(0,0,0,0),new Dimension(20,0),new Point(310,120),"Order by frequency");
-        characters = new OrderedCharacters(new Color(0,0,0,0), new Dimension(40,15), new Point(10,180), Huffman.processString(message));
+        characters = new OrderedCharacters(new Color(0,0,0,0), new Dimension(40,15), new Point(0,300), Huffman.processString(message));
+
     }
     @Override
     public void start() {
         anim();
+    }
+
+    @Override
+    public void init() {
+        text = new Text(new Color(0,0,0,0),new Dimension(50,0),new Point(325,80),"Step 2");
+        subText = new Text(new Color(0,0,0,0),new Dimension(20,0),new Point(310,120),"Order by frequency");
+        characters = new OrderedCharacters(new Color(0,0,0,0), new Dimension(40,15), new Point(0,300), Huffman.processString(message));
+        clickToContinue = new Text(new Color(0,0,0,0),new Dimension(20,0),new Point(20, this.getHeight()-20),"Click to continue");
     }
 
     @Override
@@ -56,14 +63,37 @@ public class Step2 extends JPanel implements Step {
         //Characteres and frequency
         g2.setFont(new Font("Tahoma", Font.PLAIN, (int) characters.getSize().getHeight()));
         g2.setColor(characters.getColor());
-        int currentX = 20;
-        int currentY = 300;
         int width = (int)characters.getSize().getWidth();
-        g2.drawLine(currentX,currentY,currentX,currentY+width);
-        for (HuffmanLeaf leaf: characters.getCharacters()){
-            drawCeld(g2, String.valueOf(leaf.getCharacter()), String.valueOf(leaf.getFrequency()),currentX,currentY,width);
-            currentX+=width;
+
+        List<List<HuffmanLeaf>> lists = new ArrayList<>();
+        lists.add(new ArrayList<>());
+        int count=0;
+        int currentList=0;
+        for (int i=0; i<characters.getCharacters().size(); i++){
+
+            if(count++==18){
+                count=1;
+                currentList++;
+                lists.add(new ArrayList<>());
+            }
+            lists.get(currentList).add(characters.getCharacters().get(i));
         }
+        for (int i=0; i<lists.size();i++){
+            int currentX = ((this.getWidth()/2)-(lists.get(i).size()*width/2));
+            int currentY = (int)(characters.getLocation().getY() + (width+10)*i);
+            g2.drawLine(currentX,currentY,currentX,currentY+width);
+            for (HuffmanLeaf leaf: lists.get(i)){
+                drawCeld(g2, String.valueOf(leaf.getCharacter()), String.valueOf(leaf.getFrequency()),currentX,currentY,width);
+                currentX+=width;
+            }
+        }
+
+        //click to continue
+
+        g2.setFont(new Font("Tahoma",Font.PLAIN,(int)clickToContinue.getSize().getWidth()));
+        g2.setColor(clickToContinue.getColor());
+        g2.drawString(clickToContinue.getPhrase(),(int)clickToContinue.getLocation().getX(), (int)clickToContinue.getLocation().getY());
+
         g2.dispose();
     }
 
@@ -76,14 +106,17 @@ public class Step2 extends JPanel implements Step {
             TimerInterval.fade(subText,false,this);
             TimerInterval.setTimeout( e2 -> {
                 TimerInterval.fade(characters,false,this);
-                TimerInterval.setTimeout( e3 -> addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        super.mouseClicked(e);
-                        treePanel.start(3);
-                        removeMouseListener(this);
-                    }
-                }),2000);
+                TimerInterval.setTimeout( e3 -> {
+                    TimerInterval.fadeLoop(clickToContinue,false,this);
+                    addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            super.mouseClicked(e);
+                            treePanel.start(3);
+                            removeMouseListener(this);
+                        }
+                    });
+                },2000);
             },2000);
         },1000);
     }
