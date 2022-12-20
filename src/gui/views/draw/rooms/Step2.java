@@ -16,6 +16,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Time;
 
 public class Step2 extends JPanel implements Step {
     private String message;
@@ -70,25 +71,11 @@ public class Step2 extends JPanel implements Step {
         if (animator != null && animator.isRunning()) {
             animator.stop();
         }
-        animator = PropertySetter.createAnimator(1000,text,"color",text.getColor(),new Color(0,0,0,255));
+        TimerInterval.fade(text,false,this);
         TimerInterval.setTimeout(e -> {
-            animator = PropertySetter.createAnimator(1000,subText,"color",subText.getColor(), new Color(0,0,0,255));
-            animator.addTarget(new TimingTargetAdapter(){
-                @Override
-                public void timingEvent(float fraction){
-                    repaint();
-                }
-            });
-            animator.start();
+            TimerInterval.fade(subText,false,this);
             TimerInterval.setTimeout( e2 -> {
-                animator = PropertySetter.createAnimator(1000,characters,"color",characters.getColor(), new Color(0,0,0,255));
-                animator.addTarget(new TimingTargetAdapter(){
-                    @Override
-                    public void timingEvent(float fraction){
-                        repaint();
-                    }
-                });
-                animator.start();
+                TimerInterval.fade(characters,false,this);
                 TimerInterval.setTimeout( e3 -> addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
@@ -99,14 +86,6 @@ public class Step2 extends JPanel implements Step {
                 }),2000);
             },2000);
         },1000);
-
-        animator.addTarget(new TimingTargetAdapter(){
-            @Override
-            public void timingEvent(float fraction){
-                repaint();
-            }
-        });
-        animator.start();
     }
 
     private void drawCeld(Graphics g, String character, String frequency, int x, int y, int width){

@@ -21,8 +21,6 @@ D
 src/logic/Email.java,d\0\d0f74d3f75b9e470469743a522f8db08632486b3
 Q
 !src/GUI/components/SidePanel.java,a\b\abe018d6e33d233bda05182fff6b4eaca25dea7e
-F
-src/logic/Convert.java,1\0\105175d637081575e4be6ea53876e3f016f4b85a
 w
 G.idea/sonarlint/issuestore/9/c/9ca686d2adea23c18b1ecb8fe93eb2865692c00f,8\5\85b46883e928a1725f26349f2a6f742498f642bd
 w

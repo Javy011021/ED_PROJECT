@@ -2,6 +2,7 @@ package gui.views.draw.rooms;
 
 import gui.views.TreeAnimate;
 import gui.views.draw.components.Arrow;
+import gui.views.draw.components.DrawComponent;
 import gui.views.draw.components.Node;
 import gui.views.draw.components.Text;
 import logic.Huffman;
@@ -21,11 +22,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.PriorityQueue;
 
 public class Step3 extends JPanel implements Step {
     private Animator animator;
-    private ArrayList<Node> nodes;
+    private List<DrawComponent> nodes;
     private ArrayList<Arrow> arrows;
     private Text text;
     private Text subText;
@@ -53,7 +55,6 @@ public class Step3 extends JPanel implements Step {
 
         while (!queue.isEmpty()){
             HuffmanLeaf node = (HuffmanLeaf)queue.poll().getInfo();
-            System.out.println(node.getCharacter());
             Node nod = findNode(String.valueOf(node.getCharacter()));
             nod.setLocation(new Point(currentX, 500));
             nodes.add(nod);
@@ -81,8 +82,8 @@ public class Step3 extends JPanel implements Step {
 
         //draw leafs
 
-        for (Node node: nodes){
-
+        for (DrawComponent draw: nodes){
+            Node node = (Node) draw;
             g2.setColor(node.getColor());
             g2.fillOval((int)node.getLocation().getX(),(int)node.getLocation().getY(),(int)node.getSize().getWidth(),(int)node.getSize().getHeight());
             g2.setColor(node.getColor().darker());
@@ -102,44 +103,16 @@ public class Step3 extends JPanel implements Step {
         if (animator != null && animator.isRunning()) {
             animator.stop();
         }
-        animator = PropertySetter.createAnimator(1000,text,"color",text.getColor(),new Color(0,0,0,255));
+        TimerInterval.fade(text,false,this);
         TimerInterval.setTimeout(e -> {
-            animator = PropertySetter.createAnimator(1000,subText,"color",subText.getColor(), new Color(0,0,0,255));
-            animator.addTarget(new TimingTargetAdapter(){
-                @Override
-                public void timingEvent(float fraction){
-                    repaint();
-                }
-            });
-            animator.start();
+            TimerInterval.fade(subText,false,this);
             TimerInterval.setTimeout( e2 -> {
-
-                animator = PropertySetter.createAnimator(1000,nodes.get(0),"color",nodes.get(0).getColor(), new Color(0,150,0,255));
-                for (int i=1; i<nodes.size(); i++){
-                    animator.addTarget(new PropertySetter(nodes.get(i),"color",nodes.get(0).getColor(), new Color(0,150,0,255)));
-                }
-                animator.addTarget(new TimingTargetAdapter(){
-                    @Override
-                    public void timingEvent(float fraction){
-                        repaint();
-                    }
-                });
-
-
-                animator.start();
-                TimerInterval.setTimeout( e3 -> {
-                    nextNode();
-                },2000);
+                TimerInterval.fade(nodes,false, this);
+                TimerInterval.setTimeout( e3 -> nextNode(),2000);
             },2000);
         },1000);
 
-        animator.addTarget(new TimingTargetAdapter(){
-            @Override
-            public void timingEvent(float fraction){
-                repaint();
-            }
-        });
-        animator.start();
+
     }
 
     private void nextNode(){
@@ -148,12 +121,12 @@ public class Step3 extends JPanel implements Step {
         int amount = left.getFrequency()+right.getFrequency();
         Node upNode = countLevels(left)>countLevels(right)?left:right;
         Node downNode = countLevels(left)>countLevels(right)?right:left;
-        System.out.println(countLevels(left)+" "+countLevels(right));
         int size = (int)upNode.getSize().getWidth();
         int distance = (int)(Math.abs(upNode.getLocation().getX()-getLastLeft(upNode).getLocation().getX()))+size+5;
-        Node newNode = new Node(Color.BLUE,new Dimension(50,50),new Point((int)upNode.getLocation().getX()-distance,(int)upNode.getLocation().getY()-(size*2)),"",amount);
+        Node newNode = new Node(new Color(0,120,255,0),new Dimension(50,50),new Point((int)upNode.getLocation().getX()-distance,(int)upNode.getLocation().getY()-(size*2)),"",amount);
         newNode.setLeft(downNode);
         newNode.setRight(upNode);
+        nodes.add(newNode);
 
         //move down node
         Point oldPos = downNode.getLocation();
@@ -169,7 +142,7 @@ public class Step3 extends JPanel implements Step {
         newNode.setLocation(newPos);
         moveChilds(newNode, vector);
 
-        nodes.add(newNode);
+
         queueNodes.offer(newNode);
         repaint();
         if (queueNodes.size()>1){
