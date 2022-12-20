@@ -19,11 +19,12 @@ public class HuffmanFile {
             raf.read(password);
             if (password[0]=='H'&&password[1]=='T') {
                 //get binary code
+                int codeLength = raf.readInt();
                 byte[] codeByte = new byte[raf.readInt()];
                 raf.read(codeByte);
                 BitSet bitset = BitSet.valueOf(codeByte);
                 String code = "";
-                for(int i = 0; i < bitset.length(); i++) {
+                for(int i = 0; i < codeLength; i++) {
                     if(bitset.get(i)) {
                         code += "1";
                     } else {
@@ -65,6 +66,7 @@ public class HuffmanFile {
             RandomAccessFile out = new RandomAccessFile(directory,"rw");
             out.writeInt(2);
             out.write(password);
+            out.writeInt(code.length());
             out.writeInt(data.length);
             out.write(data);
             PriorityQueue<BinaryTreeNode<HuffmanNode>> queue = Huffman.processString(phrase);
