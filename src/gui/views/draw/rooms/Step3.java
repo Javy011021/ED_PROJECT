@@ -1,7 +1,6 @@
 package gui.views.draw.rooms;
 
 import gui.views.TreeAnimate;
-import gui.views.draw.components.Arrow;
 import gui.views.draw.components.DrawComponent;
 import gui.views.draw.components.Node;
 import gui.views.draw.components.Text;
@@ -23,7 +22,6 @@ import java.util.concurrent.atomic.AtomicReference;
 public class Step3 extends JPanel implements Step {
     private Animator animator;
     private List<DrawComponent> nodes;
-    private ArrayList<Arrow> arrows;
     private Text text;
     private Text subText;
     private PriorityQueue<Node> queueNodes;
@@ -76,8 +74,31 @@ public class Step3 extends JPanel implements Step {
         g2.setColor(subText.getColor());
         g2.drawString(subText.getPhrase(), (int) subText.getLocation().getX(), (int) subText.getLocation().getY());
 
-        //draw leafs
+        //draw arrows
+        for (DrawComponent draw: nodes){
+            Node node = (Node) draw;
+            g2.setColor(node.getColor());
+            Node left = node.getLeft();
+            Node right = node.getRight();
+            if (left!=null){
+                g2.drawLine(
+                        (int)(node.getLocation().getX()+node.getSize().getWidth()/2),
+                        (int)(node.getLocation().getY()+node.getSize().getHeight()/2),
+                        (int)(left.getLocation().getX()+left.getSize().getWidth()/2),
+                        (int)(left.getLocation().getY()+left.getSize().getHeight()/2)
+                );
+            }
+            if (right!=null){
+                g2.drawLine(
+                        (int)(node.getLocation().getX()+node.getSize().getWidth()/2),
+                        (int)(node.getLocation().getY()+node.getSize().getHeight()/2),
+                        (int)(right.getLocation().getX()+right.getSize().getWidth()/2),
+                        (int)(right.getLocation().getY()+right.getSize().getHeight()/2)
+                );
+            }
+        }
 
+        //draw nodes
         for (DrawComponent draw: nodes){
             Node node = (Node) draw;
             g2.setColor(node.getColor());
@@ -90,6 +111,8 @@ public class Step3 extends JPanel implements Step {
             g2.setFont(new Font("Tahoma", Font.BOLD, 12));
             g2.drawString(String.valueOf(node.getFrequency()),((int)node.getLocation().getX()+(int)node.getSize().getWidth()/2-4),(int)node.getLocation().getY()+(int)node.getSize().getHeight()/2+16);
         }
+
+
 
         g2.dispose();
 
@@ -139,17 +162,13 @@ public class Step3 extends JPanel implements Step {
                 vector.set(new Point((int) (newPos.get().getX() - oldPos.get().getX()), (int) (newPos.get().getY() - oldPos.get().getY())));
                 TimerInterval.move(newNode, newPos.get(),this);
                 TimerInterval.move(getChilds(newNode),vector.get(), this);
-
-
                 queueNodes.offer(newNode);
+                //base case
                 if (queueNodes.size()>1){
                     TimerInterval.setTimeout( e2 -> nextNode(),1000);
                 }
             },1000);
-
         },1000);
-
-
     }
 
     private List<DrawComponent> getChilds(Node node){

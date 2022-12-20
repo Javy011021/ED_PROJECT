@@ -2,22 +2,15 @@ package gui.views.draw.rooms;
 
 import gui.views.TreeAnimate;
 import gui.views.draw.components.AllCharacters;
-import gui.views.draw.components.Arrow;
-import gui.views.draw.components.Node;
 import gui.views.draw.components.Text;
 import logic.Huffman;
 import org.jdesktop.animation.timing.Animator;
-import org.jdesktop.animation.timing.TimingTargetAdapter;
-import org.jdesktop.animation.timing.interpolation.PropertySetter;
 import logic.TimerInterval;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Time;
-import java.util.ArrayList;
 import java.util.Map;
 
 public class Step1 extends JPanel implements Step {

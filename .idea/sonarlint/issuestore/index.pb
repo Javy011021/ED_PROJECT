@@ -43,8 +43,6 @@ N
 src/gui/views/DecodePanel.java,7\a\7a238a9a0bc7cc679238ce9291c24c4043b35f2a
 Q
 !src/gui/components/SidePanel.java,0\7\07732d88bb6ead4427a25c2bd899e728fa1136cd
-X
-(src/gui/views/draw/components/Arrow.java,8\a\8a04e5105f404ab0121bbdaa6fd9be80b80d34a5
 `
 0src/gui/views/draw/components/DrawComponent.java,9\9\99e39b752d2e2bfa825b9a4983d77f9cc5891ca4
 W
