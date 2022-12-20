@@ -19,10 +19,11 @@ public class SidePanel extends JPanel {
 
     public JLabel getCopyrightLabel(){
         if (copyrightLabel==null){
-            copyrightLabel = new JLabel("©Richard, Javier");
+            copyrightLabel = new JLabel("©2022-Richard, Javier");
             copyrightLabel.setFont(new Font("Tahoma", Font.BOLD, 10));
-            copyrightLabel.setBounds(0, 0, 90,100);
-            copyrightLabel.setBounds(this.getWidth()/2-copyrightLabel.getWidth()/2, this.getHeight()-100, copyrightLabel.getWidth(),copyrightLabel.getHeight());
+            copyrightLabel.setBounds(0, 0, 120,20);
+            copyrightLabel.setBounds(this.getWidth()/2-copyrightLabel.getWidth()/2, this.getHeight()-30, copyrightLabel.getWidth(),copyrightLabel.getHeight());
+
         }
         return copyrightLabel;
     }

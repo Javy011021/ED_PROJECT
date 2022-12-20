@@ -38,9 +38,6 @@ public class Step3 extends JPanel implements Step {
     }
     @Override
     public void start() {
-        text = new Text(new Color(0,0,0,0),new Dimension(50,0),new Point(325,80),"Step 3");
-        subText = new Text(new Color(0,0,0,0),new Dimension(20,0),new Point(310,120),"Generate binary tree");
-        nodes = new ArrayList<>();
         PriorityQueue<BinaryTreeNode<HuffmanNode>> queue = Huffman.processString(message);
         int currentX = (int)(getBounds().getWidth()/2)-queue.size()*100/2;
         for (BinaryTreeNode<HuffmanNode> btn: queue){
@@ -60,6 +57,13 @@ public class Step3 extends JPanel implements Step {
 
         }
         anim();
+    }
+
+    @Override
+    public void init() {
+        text = new Text(new Color(0,0,0,0),new Dimension(50,0),new Point(325,80),"Step 3");
+        subText = new Text(new Color(0,0,0,0),new Dimension(20,0),new Point(310,120),"Generate binary tree");
+        nodes = new ArrayList<>();
     }
 
     @Override

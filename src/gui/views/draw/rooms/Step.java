@@ -5,4 +5,5 @@ import javax.swing.*;
 
 public interface Step {
     public void start();
+    public void init();
 }

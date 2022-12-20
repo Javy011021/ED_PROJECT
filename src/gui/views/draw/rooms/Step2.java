@@ -22,16 +22,26 @@ public class Step2 extends JPanel implements Step {
     private Text subText;
     private TreeAnimate treePanel;
     private OrderedCharacters characters;
+    private Text clickToContinue;
     public Step2(String message, TreeAnimate treePanel){
         this.message=message;
         this.treePanel=treePanel;
         text = new Text(new Color(0,0,0,0),new Dimension(50,0),new Point(325,80),"Step 2");
         subText = new Text(new Color(0,0,0,0),new Dimension(20,0),new Point(310,120),"Order by frequency");
         characters = new OrderedCharacters(new Color(0,0,0,0), new Dimension(40,15), new Point(0,300), Huffman.processString(message));
+
     }
     @Override
     public void start() {
         anim();
+    }
+
+    @Override
+    public void init() {
+        text = new Text(new Color(0,0,0,0),new Dimension(50,0),new Point(325,80),"Step 2");
+        subText = new Text(new Color(0,0,0,0),new Dimension(20,0),new Point(310,120),"Order by frequency");
+        characters = new OrderedCharacters(new Color(0,0,0,0), new Dimension(40,15), new Point(0,300), Huffman.processString(message));
+        clickToContinue = new Text(new Color(0,0,0,0),new Dimension(20,0),new Point(20, this.getHeight()-20),"Click to continue");
     }
 
     @Override
@@ -78,7 +88,11 @@ public class Step2 extends JPanel implements Step {
             }
         }
 
+        //click to continue
 
+        g2.setFont(new Font("Tahoma",Font.PLAIN,(int)clickToContinue.getSize().getWidth()));
+        g2.setColor(clickToContinue.getColor());
+        g2.drawString(clickToContinue.getPhrase(),(int)clickToContinue.getLocation().getX(), (int)clickToContinue.getLocation().getY());
 
         g2.dispose();
     }
@@ -92,14 +106,17 @@ public class Step2 extends JPanel implements Step {
             TimerInterval.fade(subText,false,this);
             TimerInterval.setTimeout( e2 -> {
                 TimerInterval.fade(characters,false,this);
-                TimerInterval.setTimeout( e3 -> addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        super.mouseClicked(e);
-                        treePanel.start(3);
-                        removeMouseListener(this);
-                    }
-                }),2000);
+                TimerInterval.setTimeout( e3 -> {
+                    TimerInterval.fadeLoop(clickToContinue,false,this);
+                    addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            super.mouseClicked(e);
+                            treePanel.start(3);
+                            removeMouseListener(this);
+                        }
+                    });
+                },2000);
             },2000);
         },1000);
     }

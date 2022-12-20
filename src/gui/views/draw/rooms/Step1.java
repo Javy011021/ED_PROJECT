@@ -23,6 +23,7 @@ public class Step1 extends JPanel implements Step {
     private Text subText;
     private AllCharacters charactersMap;
     private TreeAnimate treePanel;
+    private Text clickToContinue;
 
 
     public Step1(String message, TreeAnimate treePanel){
@@ -32,6 +33,7 @@ public class Step1 extends JPanel implements Step {
         text = new Text(new Color(0,0,0,0),new Dimension(50,0),new Point(325,80),"Step 1");
         subText = new Text(new Color(0,0,0,0),new Dimension(20,0),new Point(200,120),"Separate characters with their frequencies");
         charactersMap = new AllCharacters(new Color(0,0,0,0),new Dimension(200,16),new Point(250,200), Huffman.getFrequency(message));
+        clickToContinue = new Text(new Color(0,0,0,255),new Dimension(20,0),new Point(20, this.getHeight()-20),"Click to continue");
 
     }
     @Override
@@ -39,6 +41,13 @@ public class Step1 extends JPanel implements Step {
         anim();
     }
 
+    @Override
+    public void init() {
+        text = new Text(new Color(0,0,0,0),new Dimension(50,0),new Point(325,80),"Step 1");
+        subText = new Text(new Color(0,0,0,0),new Dimension(20,0),new Point(200,120),"Separate characters with their frequencies");
+        charactersMap = new AllCharacters(new Color(0,0,0,0),new Dimension(200,16),new Point(250,200), Huffman.getFrequency(message));
+        clickToContinue = new Text(new Color(0,0,0,0),new Dimension(20,0),new Point(20, this.getHeight()-20),"Click to continue");
+    }
 
 
     @Override
@@ -93,6 +102,13 @@ public class Step1 extends JPanel implements Step {
             currentY=(int)charactersMap.getLocation().getY();
             currentX+=charactersMap.getSize().getWidth()+margen;
         }
+
+        //click to continue
+
+        g2.setFont(new Font("Tahoma",Font.PLAIN,(int)clickToContinue.getSize().getWidth()));
+        g2.setColor(clickToContinue.getColor());
+        g2.drawString(clickToContinue.getPhrase(),(int)clickToContinue.getLocation().getX(), (int)clickToContinue.getLocation().getY());
+
         g2.dispose();
 
 
@@ -107,14 +123,18 @@ public class Step1 extends JPanel implements Step {
             TimerInterval.fade(subText,false,this);
             TimerInterval.setTimeout( e2 -> {
                 TimerInterval.fade(charactersMap,false,this);
-                TimerInterval.setTimeout( e3 -> addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        super.mouseClicked(e);
-                        treePanel.start(2);
-                        removeMouseListener(this);
-                    }
-                }),2000);
+                TimerInterval.setTimeout( e3 -> {
+                    TimerInterval.fadeLoop(clickToContinue,false,this);
+                    addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            super.mouseClicked(e);
+                            treePanel.start(2);
+                            removeMouseListener(this);
+
+                        }
+                    });
+                },2000);
             },2000);
         },1000);
     }

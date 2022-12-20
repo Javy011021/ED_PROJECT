@@ -12,7 +12,8 @@ public class App extends JFrame{
     private SidePanel sidePanel;
     private JPanel bodyPanel;
     private BarOptions options;
-
+    private int height;
+    private int margin = 6;
 
     public static void main(String[] args){
         EventQueue.invokeLater(new Runnable() {
@@ -26,7 +27,6 @@ public class App extends JFrame{
         });
     }
 
-
     public App(){
         setTitle("Huffman");
         setBounds(0, 0, Definitions.APP_WIDTH, Definitions.APP_HEIGHT);
@@ -34,6 +34,7 @@ public class App extends JFrame{
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(getOwner());
+        height=Definitions.APP_HEIGHT-39;
 
         JPanel panel = new JPanel();
         panel.setLayout(null);
@@ -44,9 +45,11 @@ public class App extends JFrame{
 
     }
 
+
+
     public SidePanel getSidePanel(){
         if (sidePanel==null){
-            sidePanel = new SidePanel(0,6,240, this.getHeight());
+            sidePanel = new SidePanel(0,margin,240, height-margin);
         }
         return sidePanel;
     }
@@ -56,7 +59,7 @@ public class App extends JFrame{
             bodyPanel = new JPanel();
             bodyPanel.setLayout(null);
             int x = sidePanel.getWidth()+6;
-            bodyPanel.setBounds(sidePanel.getWidth()+6,6, this.getWidth()-x, this.getHeight());
+            bodyPanel.setBounds(sidePanel.getWidth()+margin,margin, this.getWidth()-x, height-margin);
             bodyPanel.setBackground(Color.WHITE);
         }
         return bodyPanel;
