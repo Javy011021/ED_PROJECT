@@ -150,12 +150,25 @@ public class Step3 extends JPanel implements Step {
         Node downNode = countLevels(left)>countLevels(right)?right:left;
         System.out.println(countLevels(left)+" "+countLevels(right));
         int size = (int)upNode.getSize().getWidth();
-        int distance = size*countLevels(upNode)+2;
+        int distance = (int)(upNode.getLocation().getX()-getLastLeft(upNode).getLocation().getX()-size)+5;
         Node newNode = new Node(Color.BLUE,new Dimension(50,50),new Point((int)upNode.getLocation().getX()-distance,(int)upNode.getLocation().getY()-(size*2)),"",amount);
         newNode.setLeft(downNode);
         newNode.setRight(upNode);
-        downNode.setLocation(new Point((int)upNode.getLocation().getX()-distance*2,(int)upNode.getLocation().getY()));
-        moveChilds(downNode);
+
+        //move down node
+        Point oldPos = downNode.getLocation();
+        Point newPos = new Point((int)upNode.getLocation().getX()-distance*2,(int)upNode.getLocation().getY());
+        Point vector = new Point((int)(newPos.getX()-oldPos.getX()),(int)(newPos.getY()-oldPos.getY()));
+        downNode.setLocation(newPos);
+        moveChilds(downNode,vector);
+
+        //move new node
+        newPos = new Point((int)(oldPos.getX()+upNode.getLocation().getX())/2,(int)newNode.getLocation().getY());
+        oldPos = newNode.getLocation();
+        vector = new Point((int)(newPos.getX()-oldPos.getX()),(int)(newPos.getY()-oldPos.getY()));
+        newNode.setLocation(newPos);
+        moveChilds(newNode, vector);
+
         nodes.add(newNode);
         queueNodes.offer(newNode);
         repaint();
@@ -165,19 +178,25 @@ public class Step3 extends JPanel implements Step {
 
     }
 
-    private void moveChilds(Node node){
+    private void moveChilds(Node node, Point vector){
 
         Node left=node.getLeft();
         Node right=node.getRight();
         if (left!=null){
-            left.setLocation(new Point((int)node.getLocation().getX()-50,(int)node.getLocation().getY()+100));
-            moveChilds(left);
+            left.setLocation(new Point((int)(left.getLocation().getX()+vector.getX()),(int)(left.getLocation().getY()+vector.getY())));
+            moveChilds(left, vector);
         }
         if (right!=null){
-            right.setLocation(new Point((int)node.getLocation().getX()+50,(int)node.getLocation().getY()+100));
-            moveChilds(right);
+            right.setLocation(new Point((int)(right.getLocation().getX()+vector.getX()),(int)(right.getLocation().getY()+vector.getY())));
+            moveChilds(right, vector);
         }
 
+    }
+
+    private Node getLastLeft(Node node){
+        if (node.getLeft()==null)
+            return node;
+        return getLastLeft(node.getLeft());
     }
 
     private int countLevels(Node node){
