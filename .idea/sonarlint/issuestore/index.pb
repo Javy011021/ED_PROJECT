@@ -23,7 +23,5 @@ H
 0src/gui/views/draw/components/DrawComponent.java,9\9\99e39b752d2e2bfa825b9a4983d77f9cc5891ca4
 W
 'src/gui/views/draw/components/Text.java,7\4\749a4aafbe4b0058b3997496e92bbcef5202ea93
-J
-src/logic/HuffmanLeaf.java,b\c\bcee02042c99b806baef0c8e45d865c6f947bc31
 >
 ED_Project.iml,b\a\bab6e832b78084e0acaca374eb1e81dcb3ba06d3

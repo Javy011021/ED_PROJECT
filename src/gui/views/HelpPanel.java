@@ -21,6 +21,7 @@ public class HelpPanel extends JPanel {
             """);
             text.setBounds(20, 20, 780, 200);
             text.setBorder(BorderFactory.createEmptyBorder());
+            text.getPhraseText().setEditable(false);
         }
         return text;
     }
