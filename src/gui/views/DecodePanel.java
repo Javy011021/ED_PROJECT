@@ -51,8 +51,9 @@ public class DecodePanel extends JPanel {
                 if (file != null) {
                     try {
                         refreshOutput(HuffmanFile.load(file));
+                        Huffman.destroyHuffmanCreated();
                     }catch (Exception exc){
-                        System.out.println(exc.getMessage());
+                        JOptionPane.showMessageDialog(null, exc.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                     }
 
                 }

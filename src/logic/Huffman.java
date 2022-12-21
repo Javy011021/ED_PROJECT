@@ -15,6 +15,9 @@ public class Huffman {
     public static boolean isHuffmanCreated(){
         return tree!=null;
     }
+    public static void destroyHuffmanCreated(){
+        tree=null;
+    }
     public static String createHuffman(String message){
         createHuffmanTree(processString(message));
         return getHuffmanCode(message).toString();

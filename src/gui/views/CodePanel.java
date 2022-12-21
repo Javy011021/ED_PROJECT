@@ -2,11 +2,15 @@ package gui.views;
 
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.regex.Matcher;
@@ -61,6 +65,26 @@ public class CodePanel extends JPanel {
     public TextAreaScroll getPhraseText(){
         if (phraseText==null){
             phraseText = new TextAreaScroll(10,40,800,200);
+            phraseText.getPhraseText().getDocument().addDocumentListener(new DocumentListener() {
+                @Override
+                public void insertUpdate(DocumentEvent e) {
+                    outputCodeText.setText("");
+                    Huffman.destroyHuffmanCreated();
+                }
+
+                @Override
+                public void removeUpdate(DocumentEvent e) {
+                    outputCodeText.setText("");
+                    Huffman.destroyHuffmanCreated();
+                }
+
+                @Override
+                public void changedUpdate(DocumentEvent e) {
+                    outputCodeText.setText("");
+                    Huffman.destroyHuffmanCreated();
+                }
+            });
+
         }
         return phraseText;
     }
@@ -91,6 +115,7 @@ public class CodePanel extends JPanel {
                 public void actionPerformed(ActionEvent e) {
                     phraseText.setText("");
                     outputCodeText.setText("");
+                    Huffman.destroyHuffmanCreated();
                 }
             });
         }
@@ -161,7 +186,8 @@ public class CodePanel extends JPanel {
                                 Email.sendMail("temp", email);
 
                             } else {
-                                System.out.println("Invalid email");
+                                JOptionPane.showMessageDialog(null, "Invalid email", "Error", JOptionPane.ERROR_MESSAGE);
+
                             }
                         }
                     }
