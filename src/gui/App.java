@@ -29,6 +29,7 @@ public class App extends JFrame{
     }
 
     public App(){
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../img/ico.png")));
         setTitle("Huffman");
         setBounds(0, 0, Definitions.APP_WIDTH, Definitions.APP_HEIGHT);
         getContentPane().setLayout(null);

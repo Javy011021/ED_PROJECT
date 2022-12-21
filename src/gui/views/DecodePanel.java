@@ -68,10 +68,10 @@ public class DecodePanel extends JPanel {
                 dialog.setVisible(true);
                 String fileName = dialog.getDirectory()+dialog.getFile();
                 dialog.dispose();
-                file = new File(fileName);
-                if (dialog.getFile()!=null)
+                if (dialog.getFile()!=null) {
+                    file = new File(fileName);
                     getFileNameLabel().setText(dialog.getFile());
-
+                }
             });
         }
         return selectButton;
