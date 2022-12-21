@@ -58,7 +58,7 @@ public class TimerInterval {
     }
 
     public static void move(DrawComponent component, Point destiny, JPanel panel){
-        Animator animator = PropertySetter.createAnimator(500, component, "location", component.getLocation(), destiny);
+        Animator animator = PropertySetter.createAnimator(100, component, "location", component.getLocation(), destiny);
         animator.addTarget(new TimingTargetAdapter() {
             @Override
             public void timingEvent(float fraction) {
@@ -72,7 +72,7 @@ public class TimerInterval {
 
     public static void move(List<DrawComponent> components, Point vector, JPanel panel){
         if (!components.isEmpty()) {
-            Animator animator = PropertySetter.createAnimator(500, components.get(0), "location", components.get(0).getLocation(), new Point((int)(components.get(0).getLocation().getX()+vector.getX()),(int)(components.get(0).getLocation().getY()+vector.getY())));
+            Animator animator = PropertySetter.createAnimator(100, components.get(0), "location", components.get(0).getLocation(), new Point((int)(components.get(0).getLocation().getX()+vector.getX()),(int)(components.get(0).getLocation().getY()+vector.getY())));
             for (int i=1; i<components.size(); i++){
                 DrawComponent component=components.get(i);
                 animator.addTarget(new PropertySetter(component, "location", component.getLocation(), new Point((int)(component.getLocation().getX()+vector.getX()),(int)(component.getLocation().getY()+vector.getY()))));

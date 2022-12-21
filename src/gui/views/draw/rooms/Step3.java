@@ -31,6 +31,7 @@ public class Step3 extends JPanel implements Step {
     private PriorityQueue<Node> queueNodes;
     private String message;
     private TreeAnimate treePanel;
+    private int timeAnimation;
     private int nodeSize;
     public Step3(String message, TreeAnimate treePanel){
         this.message=message;
@@ -41,8 +42,12 @@ public class Step3 extends JPanel implements Step {
     public void start() {
         PriorityQueue<BinaryTreeNode<HuffmanNode>> queue = Huffman.processString(message);
         nodeSize = (int)(50-queue.size()*1.2);
+        timeAnimation = 1000-queue.size()*30;
         if (nodeSize<10){
             nodeSize=10;
+        }
+        if (timeAnimation<100){
+            timeAnimation=100;
         }
         int currentX = (int)(getBounds().getWidth()/2)-queue.size()*nodeSize;
         for (BinaryTreeNode<HuffmanNode> btn: queue){
@@ -179,7 +184,7 @@ public class Step3 extends JPanel implements Step {
                     queueNodes.offer(newNode);
                     //base case
                     if (queueNodes.size() > 1) {
-                        TimerInterval.setTimeout(e2 -> nextNode(), 1000);
+                        TimerInterval.setTimeout(e2 -> nextNode(), timeAnimation);
                     } else {
                         TimerInterval.setTimeout(e2 -> {
                             addMouseListener(new MouseAdapter() {
@@ -243,8 +248,8 @@ public class Step3 extends JPanel implements Step {
 
                         }, 1000);
                     }
-                }, 1000);
-            }, 1000);
+                }, timeAnimation);
+            }, timeAnimation);
         }
     }
 
