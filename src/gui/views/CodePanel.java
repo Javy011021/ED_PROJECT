@@ -7,10 +7,15 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import gui.components.PButton;
 import gui.components.TextAreaScroll;
 import logic.*;
+import logic.utils.Email;
 
 public class CodePanel extends JPanel {
     private JLabel phraseLabel;
@@ -137,6 +142,23 @@ public class CodePanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     //send file
+                    String email = JOptionPane.showInputDialog(null,"Write the email to send", "Send file", JOptionPane.INFORMATION_MESSAGE);
+                    //Regular Expression
+                    String regex = "^(.+)@(.+)$";
+                    //Compile regular expression to get the pattern
+                    Pattern pattern = Pattern.compile(regex);
+                    Matcher matcher = pattern.matcher(email);
+                    if (matcher.matches()){
+                        File file = new File("temp");
+                        try {
+                            file.createNewFile();
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        HuffmanFile.save("temp", phrase, code);
+                        Email.sendMail("temp",email);
+                    }
+
                 }
             });
         }

@@ -26,7 +26,7 @@ public class Email {
             Session session = Session.getDefaultInstance(props);
 
             BodyPart testroot = new MimeBodyPart();
-            testroot.setText("Hola"+email+"a continuación puede descargar su frase comprimida");
+            testroot.setText("Hola "+email+", a continuación puede descargar su frase comprimida.");
             BodyPart adjunto = new MimeBodyPart();
             adjunto.setDataHandler(new DataHandler(new FileDataSource(file)));
             adjunto.setFileName(file);
@@ -36,7 +36,7 @@ public class Email {
 
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress("garciaj1246@gmail.com"));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress("email"));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
             message.setSubject("Huffman Decoding");
             message.setContent(multiParte);
 
