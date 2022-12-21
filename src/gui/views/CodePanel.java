@@ -141,24 +141,30 @@ public class CodePanel extends JPanel {
             sendButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    //send file
-                    String email = JOptionPane.showInputDialog(null,"Write the email to send", "Send file", JOptionPane.INFORMATION_MESSAGE);
-                    //Regular Expression
-                    String regex = "^(.+)@(.+)$";
-                    //Compile regular expression to get the pattern
-                    Pattern pattern = Pattern.compile(regex);
-                    Matcher matcher = pattern.matcher(email);
-                    if (matcher.matches()){
-                        File file = new File("temp");
-                        try {
-                            file.createNewFile();
-                        } catch (IOException ex) {
-                            throw new RuntimeException(ex);
-                        }
-                        HuffmanFile.save("temp", phrase, code);
-                        Email.sendMail("temp",email);
-                    }
+                    if (Huffman.isHuffmanCreated()) {
+                        //send file
+                        String email = JOptionPane.showInputDialog(null, "Write the email to send", "Send file", JOptionPane.INFORMATION_MESSAGE);
+                        if (email != null) {
+                            //Regular Expression
+                            String regex = "^(.+)@(.+)$";
+                            //Compile regular expression to get the pattern
+                            Pattern pattern = Pattern.compile(regex);
+                            Matcher matcher = pattern.matcher(email);
+                            if (matcher.matches()) {
+                                File file = new File("temp");
+                                try {
+                                    file.createNewFile();
+                                } catch (IOException ex) {
+                                    throw new RuntimeException(ex);
+                                }
+                                HuffmanFile.save("temp", phrase, code);
+                                Email.sendMail("temp", email);
 
+                            } else {
+                                System.out.println("Invalid email");
+                            }
+                        }
+                    }
                 }
             });
         }

@@ -15,6 +15,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -29,8 +30,8 @@ public class Step3 extends JPanel implements Step {
     private Text subText;
     private PriorityQueue<Node> queueNodes;
     private String message;
-    private JPanel treeArea;
     private TreeAnimate treePanel;
+    private int nodeSize;
     public Step3(String message, TreeAnimate treePanel){
         this.message=message;
         this.treePanel=treePanel;
@@ -39,10 +40,14 @@ public class Step3 extends JPanel implements Step {
     @Override
     public void start() {
         PriorityQueue<BinaryTreeNode<HuffmanNode>> queue = Huffman.processString(message);
-        int currentX = (int)(getBounds().getWidth()/2)-queue.size()*100/2;
+        nodeSize = (int)(50-queue.size()*1.2);
+        if (nodeSize<10){
+            nodeSize=10;
+        }
+        int currentX = (int)(getBounds().getWidth()/2)-queue.size()*nodeSize;
         for (BinaryTreeNode<HuffmanNode> btn: queue){
             HuffmanLeaf node = (HuffmanLeaf) btn.getInfo();
-            queueNodes.offer(new Node(new Color(0,150,0,0),new Dimension(50,50),null,String.valueOf(node.getCharacter()), node.getFrequency()));
+            queueNodes.offer(new Node(new Color(0,150,0,0),new Dimension(nodeSize,nodeSize),null,String.valueOf(node.getCharacter()), node.getFrequency()));
 
         }
 
@@ -90,18 +95,18 @@ public class Step3 extends JPanel implements Step {
             Node right = node.getRight();
             if (left!=null){
                 g2.drawLine(
-                        (int)(node.getLocation().getX()+node.getSize().getWidth()/2),
-                        (int)(node.getLocation().getY()+node.getSize().getHeight()/2),
-                        (int)(left.getLocation().getX()+left.getSize().getWidth()/2),
-                        (int)(left.getLocation().getY()+left.getSize().getHeight()/2)
+                        (int)(node.getLocation().getX()+nodeSize/2),
+                        (int)(node.getLocation().getY()+nodeSize/2),
+                        (int)(left.getLocation().getX()+nodeSize/2),
+                        (int)(left.getLocation().getY()+nodeSize/2)
                 );
             }
             if (right!=null){
                 g2.drawLine(
-                        (int)(node.getLocation().getX()+node.getSize().getWidth()/2),
-                        (int)(node.getLocation().getY()+node.getSize().getHeight()/2),
-                        (int)(right.getLocation().getX()+right.getSize().getWidth()/2),
-                        (int)(right.getLocation().getY()+right.getSize().getHeight()/2)
+                        (int)(node.getLocation().getX()+nodeSize/2),
+                        (int)(node.getLocation().getY()+nodeSize/2),
+                        (int)(right.getLocation().getX()+nodeSize/2),
+                        (int)(right.getLocation().getY()+nodeSize/2)
                 );
             }
         }
@@ -110,14 +115,14 @@ public class Step3 extends JPanel implements Step {
         for (DrawComponent draw: nodes){
             Node node = (Node) draw;
             g2.setColor(node.getColor());
-            g2.fillOval((int)node.getLocation().getX(),(int)node.getLocation().getY(),(int)node.getSize().getWidth(),(int)node.getSize().getHeight());
+            g2.fillOval((int)node.getLocation().getX(),(int)node.getLocation().getY(),nodeSize,nodeSize);
             g2.setColor(node.getColor().darker());
-            g2.drawOval((int)node.getLocation().getX(),(int)node.getLocation().getY(),(int)node.getSize().getWidth(),(int)node.getSize().getHeight());
+            g2.drawOval((int)node.getLocation().getX(),(int)node.getLocation().getY(),nodeSize,nodeSize);
             g2.setColor(Color.WHITE);
-            g2.setFont(new Font("Tahoma", Font.BOLD, 15));
-            g2.drawString(node.getCharacter(),((int)node.getLocation().getX()+(int)node.getSize().getWidth()/2-4),(int)node.getLocation().getY()+(int)node.getSize().getHeight()/2);
-            g2.setFont(new Font("Tahoma", Font.BOLD, 12));
-            g2.drawString(String.valueOf(node.getFrequency()),((int)node.getLocation().getX()+(int)node.getSize().getWidth()/2-4),(int)node.getLocation().getY()+(int)node.getSize().getHeight()/2+16);
+            g2.setFont(new Font("Tahoma", Font.BOLD, nodeSize/4+3));
+            g2.drawString(node.getCharacter(),((int)node.getLocation().getX()+nodeSize/2-4),(int)node.getLocation().getY()+nodeSize/2);
+            g2.setFont(new Font("Tahoma", Font.BOLD, nodeSize/4));
+            g2.drawString(String.valueOf(node.getFrequency()),((int)node.getLocation().getX()+nodeSize/2-4),(int)node.getLocation().getY()+nodeSize/2+nodeSize/4+4);
         }
 
 
@@ -152,7 +157,7 @@ public class Step3 extends JPanel implements Step {
             Node downNode = countLevels(left) > countLevels(right) ? right : left;
             int size = (int) upNode.getSize().getWidth();
             int distance = (int) (Math.abs(upNode.getLocation().getX() - getLastLeft(upNode).getLocation().getX())) + size + 5;
-            Node newNode = new Node(new Color(0, 120, 255, 0), new Dimension(50, 50), new Point((int) upNode.getLocation().getX() - distance, (int) upNode.getLocation().getY() - (size * 2)), "", amount);
+            Node newNode = new Node(new Color(0, 120, 255, 0), new Dimension(nodeSize, nodeSize), new Point((int) upNode.getLocation().getX() - distance, (int) upNode.getLocation().getY() - (size * 2)), "", amount);
             newNode.setLeft(downNode);
             newNode.setRight(upNode);
             nodes.add(newNode);
@@ -184,6 +189,7 @@ public class Step3 extends JPanel implements Step {
                                     mouse = e.getPoint();
                                 }
                             });
+
                             addMouseMotionListener(new MouseAdapter() {
                                 @Override
                                 public void mouseDragged(MouseEvent e) {
@@ -195,7 +201,45 @@ public class Step3 extends JPanel implements Step {
                                     }
                                     repaint();
                                 }
+
                             });
+
+                            addMouseWheelListener(new MouseAdapter() {
+                                @Override
+                                public void mouseWheelMoved(MouseWheelEvent e) {
+                                    super.mouseWheelMoved(e);
+                                    double oldSize = nodeSize;
+                                    nodeSize -= e.getWheelRotation();
+                                    if (nodeSize<10) {
+                                        nodeSize=10;
+                                    }
+//                                    int leftX = (int)nodes.get(0).getLocation().getX();
+//                                    int upY = (int)nodes.get(0).getLocation().getY();
+//                                    int rightX = (int)(nodes.get(0).getLocation().getX()+nodes.get(0).getSize().getWidth());
+//                                    int downY = (int)(nodes.get(0).getLocation().getY()+nodes.get(0).getSize().getHeight());
+//
+//                                    for (int i=1; i<nodes.size(); i++){
+//                                        int leftXAux = (int)nodes.get(0).getLocation().getX();
+//                                        int upYAux = (int)nodes.get(0).getLocation().getY();
+//                                        int rightXAux = (int)(nodes.get(0).getLocation().getX()+nodes.get(0).getSize().getWidth());
+//                                        int downYAux = (int)(nodes.get(0).getLocation().getY()+nodes.get(0).getSize().getHeight());
+//                                        leftX = Math.min(leftXAux, leftX);
+//                                        upY = Math.min(upYAux, upY);
+//                                        rightX = Math.max(rightXAux, rightX);
+//                                        downY = Math.max(downYAux, downY);
+//                                    }
+//                                    System.out.println(rightX+" "+leftX+" "+downY+" "+upY);
+//                                    Point center = new Point(rightX-leftX,downY-upY);
+
+                                    double ratio = nodeSize/oldSize;
+                                    for (DrawComponent node: nodes){
+
+                                        node.setLocation(new Point((int)Math.round(node.getLocation().getX()*ratio),(int)Math.round(node.getLocation().getY()*ratio)));
+                                    }
+                                    repaint();
+                                }
+                            });
+
 
                         }, 1000);
                     }
@@ -224,6 +268,8 @@ public class Step3 extends JPanel implements Step {
             return node;
         return getLastLeft(node.getLeft());
     }
+
+
 
     private int countLevels(Node node){
         if (node==null)

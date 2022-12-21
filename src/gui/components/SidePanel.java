@@ -31,7 +31,7 @@ public class SidePanel extends JPanel {
     public JLabel getHuffmanLogo(){
         if (huffmanLogo==null){
             huffmanLogo = new JLabel();
-            huffmanLogo.setBounds(0,0, getWidth(), 150);
+            huffmanLogo.setBounds(10,0, getWidth()-50, 150);
             ImageIcon ico=new ImageIcon(Objects.requireNonNull(getClass().getResource("/img/Huffman Code.png")));
             ImageIcon img=new ImageIcon(ico.getImage().getScaledInstance(huffmanLogo.getWidth(), huffmanLogo.getHeight(), Image.SCALE_SMOOTH));
             huffmanLogo.setIcon(img);

@@ -2,8 +2,6 @@
 w
 G.idea/sonarlint/issuestore/4/a/4adbee48e94ce3d954851e1fc9938279b95c37bd,c\a\ca7fe37c74566a83dbdca3251cbec30a5b3b1276
 w
-G.idea/sonarlint/issuestore/a/5/a5cc2925ca8258af241be7e5b0381edf30266302,e\d\ed67eb178d523a4b3f117dcbe0eda5196367ceec
-w
 G.idea/sonarlint/issuestore/5/0/50e216b4439d2538168c3ddca9c0c2fe23bd1c02,4\7\47deea973d12bd9a7ff5999d20135c170ce61489
 w
 G.idea/sonarlint/issuestore/e/4/e49559ab2e27119238d3845cfee00ee6cd800c55,f\0\f0ae5bc4a23c06884b242b595cc1843dd35413f6
@@ -17,12 +15,8 @@ Q
 !src/GUI/components/SidePanel.java,a\b\abe018d6e33d233bda05182fff6b4eaca25dea7e
 w
 G.idea/sonarlint/issuestore/9/c/9ca686d2adea23c18b1ecb8fe93eb2865692c00f,8\5\85b46883e928a1725f26349f2a6f742498f642bd
-w
-G.idea/sonarlint/issuestore/7/6/76b8d9736099934e88e8067651ccc42d60f5ed33,1\f\1fedd97686dc3a991191deb1b3d5669e1d4b40f8
 X
 (.idea/libraries/TimingFramework_0_55.xml,8\2\823afc43b318d204c146b745e0261267923feeae
-w
-G.idea/sonarlint/issuestore/4/a/4a47b2961d335946761ee70f588844b9147e69e2,6\e\6edf5d10e95485c88a4d22a1417f16101f4e3a1c
 H
 src/META-INF/MANIFEST.MF,e\4\e4b1fd2293ba1e598e6bec4e0ee3b6b6851eb5a2
 `
@@ -33,7 +27,3 @@ J
 src/logic/HuffmanLeaf.java,b\c\bcee02042c99b806baef0c8e45d865c6f947bc31
 >
 ED_Project.iml,b\a\bab6e832b78084e0acaca374eb1e81dcb3ba06d3
-w
-G.idea/sonarlint/issuestore/6/7/67e95ce47a381083abdc00abdb66a376c74bbf24,a\9\a9e5a6cf7286cbd2f3444aea280420fad9dfb7e6
-w
-G.idea/sonarlint/issuestore/e/d/edb6e03a3acaa0aa977c8ee657292398d83741e5,a\4\a49c81b795e92502e9381a7e88d46681a498da41

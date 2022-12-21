@@ -49,7 +49,12 @@ public class DecodePanel extends JPanel {
             codeButton.addActionListener(e -> {
                 //call huffman
                 if (file != null) {
-                    refreshOutput(HuffmanFile.load(file));
+                    try {
+                        refreshOutput(HuffmanFile.load(file));
+                    }catch (Exception exc){
+                        System.out.println(exc.getMessage());
+                    }
+
                 }
 
             });

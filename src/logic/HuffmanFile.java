@@ -43,11 +43,11 @@ public class HuffmanFile {
                 Huffman.createHuffman(queue);
                 return Huffman.huffmanDecoding(code);
             }else{
-                throw new Exception();
+                throw new Exception("File no compatible");
             }
 
         } catch (Exception ex) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException("File no compatible");
         }
     }
 
